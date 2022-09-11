@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const productSchema = mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please enter product name'],
@@ -39,9 +39,9 @@ const productSchema = mongoose.Schema({
     maxLength: [4, 'Stock cannot exceed 4 characters'],
     default: 1,
   },
-  numOfReviews:{
+  numOfReviews: {
     type: Number,
-    default: 0
+    default: 0,
   },
   reviews: [
     {
@@ -65,4 +65,4 @@ const productSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Product", productSchema)
+module.exports = mongoose.model('Product', productSchema);
