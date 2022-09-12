@@ -4,6 +4,8 @@ const ErrorHandler = require('../utils/errorHandler');
 
 //Create product
 exports.createProduct = async (req, res) => {
+  req.body.user = req.user.id;
+
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
@@ -65,7 +67,7 @@ exports.getProduct = async (req, res, next) => {
 
 exports.getAllProducts = async (req, res) => {
   const resultPerPage = 5;
-  const productCount = await Product.countDocuments()
+  const productCount = await Product.countDocuments();
   const apiFeature = new Apifeatures(Product.find(), req.query)
     .search()
     .filter()
@@ -75,6 +77,6 @@ exports.getAllProducts = async (req, res) => {
   res.status(200).json({
     success: true,
     products,
-    productCount
+    productCount,
   });
 };
