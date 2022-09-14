@@ -267,3 +267,50 @@ exports.updateUserDetails = async (req, res, next) => {
     })
     .catch((err) => next(new ErrorHandler(err, 500)));
 };
+
+//Admin route
+exports.getAllUsers = async (req, res, next) => {
+  await User.find()
+    .then((users) =>
+      res.status(200).json({
+        success: true,
+        users,
+      })
+    )
+    .catch((err) => next(new ErrorHandler(err, 500)));
+};
+
+//Admin route
+exports.getUserById = async (req, res, next) => {
+  await User.findById(req.params.id)
+    .then((users) =>
+      res.status(200).json({
+        success: true,
+        users,
+      })
+    )
+    .catch((err) => next(new ErrorHandler(err, 500)));
+};
+
+//Update User role (Admin route)
+exports.updateUserRole = async (req, res, next) => {
+  await User.findByIdAndUpdate(req.params.id, { role: 'admin' })
+    .then(() =>
+      res
+        .status(200)
+        .json({ success: true, message: 'Role updated succesfully' })
+    )
+    .catch((err) => next(new ErrorHandler(err, 500)));
+};
+
+//Delete User (Admin route)
+exports.deleteUser = async (req, res, next) => {
+  await User.findByIdAndDelete(req.params.id)
+    .then(() =>
+      res.status(200).json({
+        success: true,
+        message: `User id: ${req.params.id} has been deleted`,
+      })
+    )
+    .catch((err) => next(new ErrorHandler(err, 500)));
+};
