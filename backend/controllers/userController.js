@@ -48,15 +48,15 @@ exports.loginUser = async (req, res, next) => {
   const user = await User.findOne({ email }).select('+password');
 
   if (!user) {
-    return new ErrorHandler('Invalid email or password', 401);
+    return next(new ErrorHandler('Invalid email or password', 401));
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
-  if (await isPasswordMatched) {
+  if (isPasswordMatched) {
     sendToken(user, 200, res);
   } else {
-    return new ErrorHandler('Invalid email or password', 401);
+    return next(new ErrorHandler('Invalid email or password', 401));
   }
 };
 
@@ -156,4 +156,52 @@ exports.resetPassword = async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
+};
+
+//Get User details
+exports.getUserDetails = async (req, res, next) => {
+  await User.findById(req.user.id)
+    .then((user) => {
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) =>
+      res.status(401).json({
+        success: false,
+        message: err,
+        tip: 'May be you need to login first!',
+      })
+    );
+};
+
+//Update User passowrd
+exports.updateUserPassword = async (req, res, next) => {
+  await User.findById(req.user.id, req.body.oldPassword)
+    .select('+password')
+    .then(async (user) => {
+      const isPasswordMatched = await user.comparePassword(
+        req.body.oldPassword
+      );
+
+      if (isPasswordMatched) {
+        const encryptPassword = await user.encryptPassword(
+          req.body.newPassword
+        );
+
+        User.findByIdAndUpdate(req.user.id, { password: encryptPassword })
+          .then(next(new ErrorHandler('Password updated successfully!', 200)))
+          .catch((err) => {
+            next(new ErrorHandler(err, 500));
+          });
+      }
+    })
+    .catch((err) =>
+      res.status(401).json({
+        success: false,
+        message: err,
+        tip: 'May be you need to login first!',
+      })
+    );
 };

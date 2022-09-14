@@ -45,9 +45,12 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
-
   this.password = await bcrypt.hash(this.password, 10);
 });
+
+userSchema.methods.encryptPassword = async(password) => {
+  return await bcrypt.hash(password, 10);
+}
 
 //JWT Token
 userSchema.methods.getJWTToken = function () {
