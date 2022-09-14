@@ -190,8 +190,17 @@ exports.updateUserPassword = async (req, res, next) => {
           req.body.newPassword
         );
 
-        User.findByIdAndUpdate(req.user.id, { password: encryptPassword })
-          .then(next(new ErrorHandler('Password updated successfully!', 200)))
+        User.findByIdAndUpdate(
+          req.user.id,
+          { password: encryptPassword },
+          { new: true, runValidators: true, useFindAndModify: false }
+        )
+          .then(() =>
+            res.status(200).json({
+              sucess: true,
+              message: 'Password updated succesfully',
+            })
+          )
           .catch((err) => {
             next(new ErrorHandler(err, 500));
           });
@@ -204,4 +213,57 @@ exports.updateUserPassword = async (req, res, next) => {
         tip: 'May be you need to login first!',
       })
     );
+};
+
+//Update User profile
+exports.updateUserDetails = async (req, res, next) => {
+  await User.findById(req.user.id)
+    .then(async () => {
+      //First check if user tries to update the email
+      if (req.body.email) {
+        //Check if user with same email already exists
+        await User.findOne({ email: req.body.email }).then(async (user) => {
+          //In case same email user does'nt exist
+          if (!user) {
+            await User.findByIdAndUpdate(req.user.id, req.body, {
+              new: true,
+              runValidators: true,
+              useFindAndModify: false,
+            })
+              .then(() =>
+                res.status(200).json({
+                  success: true,
+                  message: 'Details updated successfully',
+                })
+              )
+              .catch((err) => {
+                next(new ErrorHandler(err, 500));
+              });
+          } else {
+            res.status(500).json({
+              success: false,
+              message: 'This email already exists in our database',
+            });
+          }
+        });
+
+        //Condition in case an user with the same email is not found, then user details are updated succesfully
+      } else {
+        await User.findByIdAndUpdate(req.user.id, req.body, {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        })
+          .then(() =>
+            res.status(200).json({
+              success: true,
+              message: 'Details updated successfully',
+            })
+          )
+          .catch((err) => {
+            next(new ErrorHandler(err, 500));
+          });
+      }
+    })
+    .catch((err) => next(new ErrorHandler(err, 500)));
 };
