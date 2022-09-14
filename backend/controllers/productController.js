@@ -80,3 +80,88 @@ exports.getAllProducts = async (req, res) => {
     productCount,
   });
 };
+
+//Managing product reviews
+exports.createProductReview = async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await Product.findById(productId);
+  const isReviewed = product.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((rev) => {
+      if (rev.user.toString() === req.user._id.toString()) {
+        (rev.rating = rating), (rev.comment = comment);
+      }
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+
+  let avg = 0;
+
+  product.ratings = product.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  product.ratings = avg / product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+};
+
+//Get all reviews
+exports.getAllReviews = async (req, res, next) => {
+  // const product =
+  await Product.findById(req.query.id)
+    .then((product) => res.status(200).json(product.reviews))
+    .catch((err) =>
+      res.status(404).json({ error: true, message: 'Product not found' })
+    );
+};
+
+//Delete Review (Admin)
+exports.deleteReview = async (req, res, next) => {
+  await Product.findById(req.query.productId)
+    .then(async (product) => {
+      const reviews = product.reviews.filter(
+        (rev) => rev._id.toString() !== req.query.id.toString()
+      );
+
+      let avg = 0;
+
+      reviews.forEach((rev) => {
+        avg += rev.rating;
+      });
+
+      const ratings = avg / reviews.length;
+
+      const numOfReviews = reviews.length;
+
+      await Product.findByIdAndUpdate(
+        req.query.productId,
+        {reviews: reviews, ratings: ratings, numOfReviews: numOfReviews},
+        {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        }
+      ).then(() => res.status(200).json({message: "Review has been removed"}))
+    })
+    .catch((err) =>
+      res.status(404).json({ error: true, message: 'Product not found' })
+    );
+};
