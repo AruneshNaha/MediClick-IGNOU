@@ -3,29 +3,30 @@ const ErrorHandler = require('../utils/errorHandler');
 const User = require('../models/userModels');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail.js');
+const validator = require('validator');
 const crypto = require('crypto');
 
 //Register a user
 exports.registerUser = async (req, res, next) => {
-  User.findOne({ email: req.body.email })
+
+  if(!req.body.email || !req.body.name || !req.body.password || !validator.isEmail(req.body.email)){
+    return next(new ErrorHandler('Please enter all fields correctly', 400))
+  }
+  
+  else{
+    User.findOne({ email: req.body.email })
     .then((user) => {
       if (user) {
-        return res
-          .status(400)
-          .json({ emailError: 'Email is already registered in our website' });
+        return next(new ErrorHandler('Email is already registered in our website', 400))
       } else {
         const newUser = new User({
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
-          avatar: {
-            public_id: 'This is a sample id',
-            url: 'profilepicurl',
-          },
         });
         newUser.save();
 
-        sendToken(newUser, 201, res);
+        sendToken(newUser, 200, res);
       }
     })
     .catch((err) =>
@@ -33,6 +34,7 @@ exports.registerUser = async (req, res, next) => {
         message: err,
       })
     );
+  }
 };
 
 ////Login user

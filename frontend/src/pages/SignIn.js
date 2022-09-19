@@ -3,14 +3,13 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
 
-function SignIn() {
-
+function SignIn(props) {
   const [credentials, setCredentials] = useState({
-    email: "",
-    name: "",
-    password: "",
+    email: '',
+    name: '',
+    password: '',
   });
-  const host = "http://localhost:4000";
+  const host = 'http://localhost:4000';
 
   const context = useContext(AuthContext);
   const { authenticate } = context;
@@ -24,28 +23,30 @@ function SignIn() {
     e.preventDefault();
     try {
       const response = await fetch(`${host}/api/v1/login`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: credentials.email,
-          name: credentials.name,
           password: credentials.password,
         }),
       });
 
       const auth = await response.json();
-      localStorage.setItem("token", auth.token);
-      authenticate();
-      navigate("/");
-      // props.showAlert("success", "You are successfully signed up!");
+      if (response.status === 200) {
+        localStorage.setItem('token', auth.token);
+        authenticate();
+        navigate('/');
+        props.showAlert('You are successfully signed in!', 'success');
+      } else {
+        props.showAlert('Invalid Credentials', 'danger');
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
   return (
     <div
       className="position-relative"
@@ -56,9 +57,7 @@ function SignIn() {
       </div>
 
       <div className="my-3 p-5">
-        <form
-        onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
             <input
@@ -68,8 +67,8 @@ function SignIn() {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter email"
-                value={credentials.email}
-                onChange={onChange}
+              value={credentials.email}
+              onChange={onChange}
             />
           </div>
           <div className="form-group">
@@ -80,8 +79,8 @@ function SignIn() {
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Password"
-                value={credentials.password}
-                onChange={onChange}
+              value={credentials.password}
+              onChange={onChange}
             />
           </div>
 
