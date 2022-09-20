@@ -1,7 +1,11 @@
-import React from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const token = localStorage.getItem('token');
+  const host = 'http://localhost:4000';
+
+  console.log(token);
 
   return (
     <>
@@ -28,21 +32,53 @@ export default function Navbar() {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/signin">
-                  Sign in
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/forgotpassword">
-                  Forgot Password
-                </Link>
-              </li>
+              {token === null && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/signin">
+                    Sign in
+                  </Link>
+                </li>
+              )}
+              {token === null && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Register
+                  </Link>
+                </li>
+              )}
+              {token !== null && (
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    role="button"
+                    onClick={async () => {
+                      console.log(token);
+                      try {
+                        await fetch(`${host}/api/v1/logout`, {
+                          method: 'GET',
+                        });
+                        localStorage.clear();
+
+                        props.showAlert(
+                          'You are successfully logged out!',
+                          'success'
+                        );
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              )}
+              {token !== null && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/forgotpassowrd">
+                    Forgot Password
+                  </Link>
+                </li>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" to="/about">
                   About us

@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <AuthState>
       <Router>
-        <Navbar></Navbar>
+        <Navbar showAlert={showAlert}></Navbar>
         <Alert alert={alert}></Alert>
         <Routes>
           <Route exact path="/" element={<Dashboard></Dashboard>}></Route>
