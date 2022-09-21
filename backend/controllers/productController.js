@@ -2,6 +2,38 @@ const Product = require('../models/productModel');
 const Apifeatures = require('../utils/apiFeatures');
 const ErrorHandler = require('../utils/errorHandler');
 
+const path = require('path');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname,'../uploads'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + path.extname(file.originalname);
+    cb(null, req.body.id + '-' + uniqueSuffix);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+}).single('images');
+
+exports.uploadProductImage = async (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.status(400).json({
+        message: err,
+      });
+    } else {
+      res.status(200).json({
+        message: 'Succesfully uploaded!',
+        filename: `uploads/${req.file.filename}`,
+      });
+    }
+  });
+};
+
 //Create product
 exports.createProduct = async (req, res) => {
   req.body.user = req.user.id;
@@ -153,13 +185,15 @@ exports.deleteReview = async (req, res, next) => {
 
       await Product.findByIdAndUpdate(
         req.query.productId,
-        {reviews: reviews, ratings: ratings, numOfReviews: numOfReviews},
+        { reviews: reviews, ratings: ratings, numOfReviews: numOfReviews },
         {
           new: true,
           runValidators: true,
           useFindAndModify: false,
         }
-      ).then(() => res.status(200).json({message: "Review has been removed"}))
+      ).then(() =>
+        res.status(200).json({ message: 'Review has been removed' })
+      );
     })
     .catch((err) =>
       res.status(404).json({ error: true, message: 'Product not found' })
