@@ -42,16 +42,13 @@ function Register(props) {
         });
 
         const auth = await response.json();
-        console.log(response.status);
-        console.log(response);
         if (response.status === 200) {
           localStorage.setItem('token', auth.token);
           authenticate();
           navigate('/');
           props.showAlert('You are successfully registered!', 'success');
         } else {
-          console.log(response);
-          props.showAlert('Use a different email', 'danger');
+          props.showAlert(auth.error, 'danger');
         }
       } catch (error) {
         console.log(error);

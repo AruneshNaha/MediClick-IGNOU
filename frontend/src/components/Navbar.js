@@ -5,8 +5,6 @@ export default function Navbar(props) {
   const token = localStorage.getItem('token');
   const host = 'http://localhost:4000';
 
-  console.log(token);
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,7 +50,7 @@ export default function Navbar(props) {
                     className="nav-link"
                     role="button"
                     onClick={async () => {
-                      console.log(token);
+                      // console.log(token);
                       try {
                         await fetch(`${host}/api/v1/logout`, {
                           method: 'GET',
