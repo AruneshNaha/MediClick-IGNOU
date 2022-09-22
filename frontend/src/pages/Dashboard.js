@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Crsl from '../components/Crsl';
 import ProductCard from '../components/ProductCard';
+import AuthContext from './context/AuthContext';
+import AuthState from './context/AuthState';
 
 export default function Dashboard() {
   const getProducts = async () => {
@@ -32,8 +34,12 @@ export default function Dashboard() {
     loadallproducts();
   }, []);
 
+  
+  const context = useContext(AuthContext)
+  const { cart, totalPrice, updateCart } = context
+
   return (
-    <>
+    <AuthState>
       <div
         className="position-relative"
         style={{ margin: '30px 0px', marginTop: '10px' }}
@@ -53,6 +59,6 @@ export default function Dashboard() {
           
         </div>
       </div>
-    </>
+    </AuthState>
   );
 }
