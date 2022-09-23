@@ -28,8 +28,20 @@ const AuthState = (props) => {
 
   };
 
+  const emptyCart = () => {
+    setCart([])
+    setTotalPrice(0)
+  }
+
+  console.log(cart)
+
   return (
-    <AuthContext.Provider value={{ authToken, authenticate, cart, updateCart, totalPrice }}>
+    <AuthContext.Provider value={{ authToken, 
+    authenticate, 
+    cart, 
+    emptyCart,
+    updateCart, 
+    totalPrice }}>
       {props.children}
     </AuthContext.Provider>
   );

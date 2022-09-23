@@ -35,8 +35,7 @@ export default function Dashboard() {
   }, []);
 
   
-  const context = useContext(AuthContext)
-  const { cart, totalPrice, updateCart } = context
+
 
   return (
     <AuthState>
