@@ -47,8 +47,9 @@ export default function ProductCard(props) {
 
                 updateCart(cartItem);
                 setProductAdded(1);
+                props.showAlert('Product added to cart', 'success');
                 if (productAdded) {
-                  removeFromCart(props.product._id)
+                  //TODO: update cart item quantity
                 }
               }}
             >
@@ -68,8 +69,9 @@ export default function ProductCard(props) {
               <button
                 className="btn btn-danger"
                 onClick={() => {
-                  removeFromCart(props.product._id)
-                  setProductAdded(0)
+                  removeFromCart(props.product._id);
+                  setProductAdded(0);
+                  props.showAlert('Product removed from cart', 'danger');
                 }}
               >
                 Remove

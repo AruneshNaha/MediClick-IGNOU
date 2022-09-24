@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import AuthContext from './context/AuthContext';
 import AuthState from './context/AuthState';
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const getProducts = async () => {
     return await fetch(`http://localhost:4000/api/v1/products`, {
       method: 'GET',
@@ -34,7 +34,6 @@ export default function Dashboard() {
     loadallproducts();
   }, []);
 
-  
 
 
   return (
@@ -52,7 +51,7 @@ export default function Dashboard() {
         <div className="row m-3">
           {
             products.map((product) => {
-              return (<ProductCard key={product._id} product = {product}></ProductCard>)
+              return (<ProductCard key={product._id} product = {product} showAlert = {props.showAlert}></ProductCard>)
             })
           }
           

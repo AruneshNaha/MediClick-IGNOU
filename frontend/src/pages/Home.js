@@ -30,7 +30,7 @@ export default function Home() {
         <Navbar showAlert={showAlert}></Navbar>
         <Alert alert={alert}></Alert>
         <Routes>
-          <Route exact path="/" element={<Dashboard></Dashboard>}></Route>
+          <Route exact path="/" element={<Dashboard showAlert={showAlert}></Dashboard>}></Route>
           <Route exact path="/signin" element={<SignIn showAlert={showAlert}></SignIn>}></Route>
           <Route exact path="/register" element={<Register showAlert={showAlert}></Register>}></Route>
           <Route
