@@ -7,20 +7,11 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function ProductCard(props) {
   const context = useContext(AuthContext);
-  const { cart, updateCart, totalPrice, emptyCart } = context;
-
+  const { cart, updateCart, totalPrice, emptyCart, removeFromCart } = context;
 
   const quantityArray = [1, 2, 3];
   const [quantity, setQuantity] = useState(0);
-
-  const updateQuantity = (quantity = 1) => {
-    setQuantity(quantity);
-    console.log(`Quantity: ${quantity}`);
-  };
-
-  const addToCart = (quantity) => {
-    updateCart(props.product._id, props.product.name, props.product.price, quantity)
-  };
+  const [productAdded, setProductAdded] = useState(0);
 
   return (
     <div className="col-12 col-md-6 col-lg-4">
@@ -43,41 +34,49 @@ export default function ProductCard(props) {
 
             <DropdownButton
               id="dropdown-basic-button"
-              title={'Add to cart'}
+              title={productAdded ? `Added ${quantity} to cart` : 'Add to cart'}
               onSelect={(e) => {
-                updateQuantity(e)
-                addToCart(quantity)
+                setQuantity(e);
+                const cartItem = {
+                  productId: props.product._id,
+                  name: props.product.name,
+                  price: props.product.price,
+                  quantity: e,
+                  totalPrice: e * props.product.price,
+                };
+
+                updateCart(cartItem);
+                setProductAdded(1);
+                if (productAdded) {
+                  removeFromCart(props.product._id)
+                }
               }}
             >
               {quantityArray.map((quantity) => {
                 return (
-                  <Dropdown.Item eventKey={quantity} key={quantity} value={quantity}>
+                  <Dropdown.Item
+                    eventKey={quantity}
+                    key={quantity}
+                    value={quantity}
+                  >
                     {quantity}
                   </Dropdown.Item>
                 );
               })}
             </DropdownButton>
-            {/* <Dropdown as={ButtonGroup}>
-              <Button variant="success" >{cart.length === 0 ? 'Add to cart' : `Remove from cart`}</Button>
-
-              <Dropdown.Toggle
-                split
-                variant="success"
-                id="dropdown-split-basic"
-                onSelect={(e) => {
-                  console.log(e)
+            {productAdded ? (
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  removeFromCart(props.product._id)
+                  setProductAdded(0)
                 }}
-              />
-
-              <Dropdown.Menu>
-                {
-                  quantityArray.map((quantity) => {
-                    return <Dropdown.Item key={quantity} value={quantity}>{quantity}</Dropdown.Item>
-                  })
-                }
-                
-              </Dropdown.Menu>
-            </Dropdown> */}
+              >
+                Remove
+              </button>
+            ) : (
+              ``
+            )}
           </div>
         </div>
       </div>

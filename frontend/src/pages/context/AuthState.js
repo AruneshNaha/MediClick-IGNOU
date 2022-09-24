@@ -11,22 +11,27 @@ const AuthState = (props) => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const updateCart = (productId, name, price, quantity) => {
+  const updateCart = (cartItem) => {
 
-    let totalItemPrice = price * quantity
+    const arr = [...cart, cartItem]
 
-    const arr = [...cart, {
-        productId: productId,
-        name: name,
-        price: price,
-        quantity: quantity,
-        totalPrice: totalItemPrice
-    }]
-
-    setTotalPrice(totalPrice + totalItemPrice)
+    setTotalPrice(totalPrice + cartItem.totalPrice)
     setCart(arr)
 
   };
+
+  const removeFromCart = (productId) => {
+
+    var filteredCart = []
+    
+    cart.forEach((cartItem) => {
+      if(cartItem.productId !== productId){
+        filteredCart.push(cartItem)
+      }
+    })
+    
+    setCart(filteredCart)
+  }
 
   const emptyCart = () => {
     setCart([])
@@ -41,6 +46,7 @@ const AuthState = (props) => {
     cart, 
     emptyCart,
     updateCart, 
+    removeFromCart,
     totalPrice }}>
       {props.children}
     </AuthContext.Provider>
