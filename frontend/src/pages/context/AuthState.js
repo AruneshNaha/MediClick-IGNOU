@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthContext from "./AuthContext";
 
 const AuthState = (props) => {
@@ -17,7 +17,7 @@ const AuthState = (props) => {
 
     setTotalPrice(totalPrice + cartItem.totalPrice)
     setCart(arr)
-
+    console.log(`cart array from authstate: ${cart}`)
   };
 
   const removeFromCart = (productId) => {
@@ -39,6 +39,12 @@ const AuthState = (props) => {
   }
 
   console.log(cart)
+
+  useEffect(() => {
+    setCart(cart)
+    setTotalPrice(totalPrice)
+  }, [])
+  
 
   return (
     <AuthContext.Provider value={{ authToken, 

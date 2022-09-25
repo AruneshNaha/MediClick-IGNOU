@@ -6,35 +6,6 @@ import AuthContext from './context/AuthContext';
 import AuthState from './context/AuthState';
 
 export default function Dashboard(props) {
-  const getProducts = async () => {
-    return await fetch(`http://localhost:4000/api/v1/products`, {
-      method: 'GET',
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const [products, setproducts] = useState([]);
-  const [error, seterror] = useState(false);
-
-  const loadallproducts = () => {
-    getProducts().then((data) => {
-      if (data.error) {
-        seterror(data.error);
-      } else {
-        setproducts(data.products);
-        console.log(data);
-      }
-    });
-  };
-
-  useEffect(() => {
-    loadallproducts();
-  }, []);
-
-
 
   return (
     <AuthState>
@@ -47,16 +18,7 @@ export default function Dashboard(props) {
         </center>
       </div>
       <Crsl></Crsl>
-      <div className="container m-5">
-        <div className="row m-3">
-          {
-            products.map((product) => {
-              return (<ProductCard key={product._id} product = {product} showAlert = {props.showAlert}></ProductCard>)
-            })
-          }
-          
-        </div>
-      </div>
+      
     </AuthState>
   );
 }

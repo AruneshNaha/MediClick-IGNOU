@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import AuthContext from '../pages/context/AuthContext';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
@@ -36,20 +34,30 @@ export default function ProductCard(props) {
               id="dropdown-basic-button"
               title={productAdded ? `Added ${quantity} to cart` : 'Add to cart'}
               onSelect={(e) => {
-                setQuantity(e);
-                const cartItem = {
-                  productId: props.product._id,
-                  name: props.product.name,
-                  price: props.product.price,
-                  quantity: e,
-                  totalPrice: e * props.product.price,
-                };
+                if (!productAdded) {
+                  setQuantity(e);
+                  const cartItem = {
+                    productId: props.product._id,
+                    name: props.product.name,
+                    price: props.product.price,
+                    quantity: e,
+                    totalPrice: e * props.product.price,
+                  };
+                  
 
-                updateCart(cartItem);
-                setProductAdded(1);
-                props.showAlert('Product added to cart', 'success');
-                if (productAdded) {
-                  //TODO: update cart item quantity
+                  updateCart(cartItem);
+
+                  props.createCartArray(cart)
+                  setProductAdded(1);
+                  props.showAlert('Product added to cart', 'success');
+                } else {
+                  cart.forEach((cartItem) => {
+                    if (cartItem.productId === props.product._id) {
+                      cartItem.quantity = e;
+                      cartItem.totalPrice = e * props.product.price
+                    }
+                    props.createCartArray(cart)
+                  });
                 }
               }}
             >
@@ -72,6 +80,7 @@ export default function ProductCard(props) {
                   removeFromCart(props.product._id);
                   setProductAdded(0);
                   props.showAlert('Product removed from cart', 'danger');
+                  props.createCartArray(cart)
                 }}
               >
                 Remove

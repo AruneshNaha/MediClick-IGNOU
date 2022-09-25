@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Alert from '../components/Alert';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -7,8 +7,11 @@ import Dashboard from './Dashboard';
 import SignIn from './SignIn';
 import NotFound from './NotFound';
 import Register from './Register';
+import Products from '../components/Products';
 import ForgotPassword from './ForgotPassword';
 import AuthState from './context/AuthState';
+import Cart from './Cart';
+import AuthContext from './context/AuthContext';
 
 export default function Home() {
 
@@ -33,6 +36,8 @@ export default function Home() {
           <Route exact path="/" element={<Dashboard showAlert={showAlert}></Dashboard>}></Route>
           <Route exact path="/signin" element={<SignIn showAlert={showAlert}></SignIn>}></Route>
           <Route exact path="/register" element={<Register showAlert={showAlert}></Register>}></Route>
+          <Route exact path="/products" element={<Products showAlert={showAlert}></Products>}></Route>
+          <Route exact path="/cart" element={<Cart showAlert={showAlert}></Cart>}></Route>
           <Route
             exact
             path="/forgotpassword"
