@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect  } from 'react';
 import AuthContext from '../pages/context/AuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -11,12 +11,26 @@ export default function ProductCard(props) {
   const [quantity, setQuantity] = useState(0);
   const [productAdded, setProductAdded] = useState(0);
 
+  const checkIfProductAdded = (cart) => {
+    cart.forEach((cartItem, index) => {
+      if(cartItem.productId === props.product._id){
+        setProductAdded(1)
+        setQuantity(cartItem.quantity)
+      }
+    })
+  }
+
+  useEffect(() => {
+    checkIfProductAdded(cart)
+  }, [])
+  
+
   return (
     <div className="col-12 col-md-6 col-lg-4">
       <div className="card">
         <img
           src={require(`../backend/uploads/${props.product._id}.jpg`)}
-          alt="Product not found!"
+          alt="Product imag not found!"
           className="card-img-top"
         />
         <div className="card-body">
@@ -58,6 +72,8 @@ export default function ProductCard(props) {
                     }
                     props.createCartArray(cart)
                   });
+
+                  setQuantity(e);
                 }
               }}
             >
