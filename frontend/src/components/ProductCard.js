@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect  } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../pages/context/AuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -13,17 +13,16 @@ export default function ProductCard(props) {
 
   const checkIfProductAdded = (cart) => {
     cart.forEach((cartItem, index) => {
-      if(cartItem.productId === props.product._id){
-        setProductAdded(1)
-        setQuantity(cartItem.quantity)
+      if (cartItem.productId === props.product._id) {
+        setProductAdded(1);
+        setQuantity(cartItem.quantity);
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    checkIfProductAdded(cart)
-  }, [])
-  
+    checkIfProductAdded(cart);
+  }, []);
 
   return (
     <div className="col-12 col-md-6 col-lg-4">
@@ -34,16 +33,17 @@ export default function ProductCard(props) {
           className="card-img-top"
         />
         <div className="card-body">
-          <h5 className="card-title">{props.product.name}</h5>
+          <h5 className="card-title d-flex justify-content-between">
+            {props.product.name}{' '}
+            <span className="badge bg-info">
+              <h5>Rs. {props.product.price}</h5>
+            </span>
+          </h5>
           <h6>
             <i>{props.product.category}</i>
           </h6>
           <p className="card-text">{props.product.description}</p>
           <div className="d-flex justify-content-between">
-            <span className="badge bg-info">
-              <h5>Rs. {props.product.price}</h5>
-            </span>
-
             <DropdownButton
               id="dropdown-basic-button"
               title={productAdded ? `Added ${quantity} to cart` : 'Add to cart'}
@@ -57,20 +57,19 @@ export default function ProductCard(props) {
                     quantity: e,
                     totalPrice: e * props.product.price,
                   };
-                  
 
                   updateCart(cartItem);
 
-                  props.createCartArray(cart)
+                  props.createCartArray(cart);
                   setProductAdded(1);
                   props.showAlert('Product added to cart', 'success');
                 } else {
                   cart.forEach((cartItem) => {
                     if (cartItem.productId === props.product._id) {
                       cartItem.quantity = e;
-                      cartItem.totalPrice = e * props.product.price
+                      cartItem.totalPrice = e * props.product.price;
                     }
-                    props.createCartArray(cart)
+                    props.createCartArray(cart);
                   });
 
                   setQuantity(e);
@@ -96,7 +95,7 @@ export default function ProductCard(props) {
                   removeFromCart(props.product._id);
                   setProductAdded(0);
                   props.showAlert('Product removed from cart', 'danger');
-                  props.createCartArray(cart)
+                  props.createCartArray(cart);
                 }}
               >
                 Remove
