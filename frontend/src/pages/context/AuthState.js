@@ -20,6 +20,13 @@ const AuthState = (props) => {
     console.log(`cart array from authstate: ${cart}`)
   };
 
+  const updateTotalPrice = (cart) => {
+
+    cart.forEach((cartItem) => {
+      setTotalPrice(totalPrice + cartItem.totalPrice)
+    })
+  }
+
   const removeFromCart = (productId) => {
 
     var filteredCart = []
@@ -53,6 +60,7 @@ const AuthState = (props) => {
     emptyCart,
     updateCart, 
     removeFromCart,
+    updateTotalPrice,
     totalPrice }}>
       {props.children}
     </AuthContext.Provider>

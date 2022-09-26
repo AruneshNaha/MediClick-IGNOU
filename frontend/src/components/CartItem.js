@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import AuthContext from '../pages/context/AuthContext';
@@ -6,7 +6,11 @@ import AuthContext from '../pages/context/AuthContext';
 export default function CartItem(props) {
   const quantityArray = [1, 2, 3];
   const context = useContext(AuthContext);
-  const { cart, updateCart, removeFromCart } = context;
+  const { cart, updateTotalPrice, updateCart, removeFromCart } = context;
+
+  const [quantity, setQuantity] = useState(0);
+
+  // setQuantity(props.cartItem.quantity)
 
   return (
     <div className="card text-left">
@@ -22,42 +26,45 @@ export default function CartItem(props) {
       <div className="card-body d-flex justify-content-between">
         <h5 className="card-title">{`Rs. ${props.cartItem.price}`}</h5>
         <p className="card-text">{`Total Price ${props.cartItem.totalPrice}`}</p>
-        <a href="/" className="btn btn-primary">
-          {/* {`Quantity: ${props.cartItem.quantity}`} */}
-          <DropdownButton
-            id="dropdown-basic-button"
-            title={`Quantity: ${props.cartItem.quantity}`}
-            onSelect={(e) => {
-              cart.forEach((cartItem) => {
-                if (cartItem.productId === props.cartItem.productId) {
-                  cartItem.quantity = e;
-                  cartItem.totalPrice = e * props.cartItem.price;
-                }
-              });
-            }}
-          >
-            {quantityArray.map((quantity) => {
-              return (
-                <Dropdown.Item
-                  eventKey={quantity}
-                  key={quantity}
-                  value={quantity}
-                >
-                  {quantity}
-                </Dropdown.Item>
-              );
-            })}
-          </DropdownButton>
+        {/* {`Quantity: ${props.cartItem.quantity}`} */}
 
-          <button
-            className="btn btn-danger"
-            onClick={() => {
-              removeFromCart(props.cartItem.productId);
-            }}
-          >
-            Remove
-          </button>
-        </a>
+        <DropdownButton
+          id="dropdown-basic-button"
+          title={`Quantity: ${props.cartItem.quantity}`}
+          onSelect={(e) => {
+            setQuantity(e);
+            cart.forEach((cartItem) => {
+              if (cartItem.productId === props.cartItem.productId) {
+                cartItem.quantity = e;
+                cartItem.totalPrice = e * props.cartItem.price;
+              }
+            });
+
+            setQuantity(e);
+            updateTotalPrice(cart)
+          }}
+        >
+          {quantityArray.map((quantity) => {
+            return (
+              <Dropdown.Item
+                eventKey={quantity}
+                key={quantity}
+                value={quantity}
+              >
+                {quantity}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
+
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            removeFromCart(props.cartItem.productId);
+          }}
+        >
+          Remove
+        </button>
       </div>
     </div>
   );

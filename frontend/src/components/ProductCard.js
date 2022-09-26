@@ -5,7 +5,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function ProductCard(props) {
   const context = useContext(AuthContext);
-  const { cart, updateCart, totalPrice, emptyCart, removeFromCart } = context;
+  const { cart, updateCart, updateTotalPrice, totalPrice, emptyCart, removeFromCart } = context;
 
   const quantityArray = [1, 2, 3];
   const [quantity, setQuantity] = useState(0);
@@ -59,6 +59,7 @@ export default function ProductCard(props) {
                   };
 
                   updateCart(cartItem);
+                  updateTotalPrice(cart)
 
                   props.createCartArray(cart);
                   setProductAdded(1);
@@ -73,6 +74,7 @@ export default function ProductCard(props) {
                   });
 
                   setQuantity(e);
+                  updateTotalPrice(cart)
                 }
               }}
             >
