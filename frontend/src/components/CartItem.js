@@ -41,7 +41,7 @@ export default function CartItem(props) {
             });
 
             setQuantity(e);
-            updateTotalPrice(cart)
+            updateTotalPrice(cart);
           }}
         >
           {quantityArray.map((quantity) => {
