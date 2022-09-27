@@ -143,6 +143,7 @@ export default function Navbar(props) {
                 options={productArray}
                 value={value}
                 sx={{ width: 300 }}
+                size={'small'}
                 renderInput={(params) => (
                   <TextField {...params} label="Product Name" />
                 )}

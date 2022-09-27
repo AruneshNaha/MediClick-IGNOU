@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../components/Navbar';
-import Alert from '../components/Alert';
+import FireAlert from '../components/Alert';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AboutUs from './AboutUs';
 import Dashboard from './Dashboard';
@@ -25,14 +25,14 @@ export default function Home() {
     })
     setTimeout(() => {
         setAlert(null);
-    }, 1500);
+    }, 3000);
 }
 
   return (
     <AuthState>
       <Router>
         <Navbar showAlert={showAlert}></Navbar>
-        <Alert alert={alert}></Alert>
+        <FireAlert alert={alert}></FireAlert>
         <Routes>
           <Route exact path="/" element={<Dashboard showAlert={showAlert}></Dashboard>}></Route>
           <Route exact path="/signin" element={<SignIn showAlert={showAlert}></SignIn>}></Route>

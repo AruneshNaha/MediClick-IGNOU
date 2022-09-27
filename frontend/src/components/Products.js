@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AuthContext from '../pages/context/AuthContext';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from './ProductCard';
 
 export default function Products(props) {
@@ -56,7 +56,7 @@ export default function Products(props) {
     <div className="d-grip gap-2">
     <center><button className="btn btn-primary" type="button" onClick={() => {
       navigate('/cart', {state: cart})
-    }}>{`Go to cart >>>`} </button></center>
+    }}>Go to cart <ShoppingCartIcon></ShoppingCartIcon> </button></center>
     </div>
       <div className="container m-5">
         <div className="row m-3">
