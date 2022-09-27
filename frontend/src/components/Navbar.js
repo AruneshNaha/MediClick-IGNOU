@@ -1,9 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Autocomplete from '@mui/material/Autocomplete';
+import { TextField } from '@mui/material';
 
 export default function Navbar(props) {
   const token = localStorage.getItem('token');
   const host = 'http://localhost:4000';
+
+  const getProducts = async () => {
+    return await fetch(`http://localhost:4000/api/v1/products`, {
+      method: 'GET',
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const [products, setProducts] = useState([]);
+  const [productArray, setProductArray] = useState([]);
+  const [error, seterror] = useState(false);
+
+  const loadallproducts = () => {
+
+    let arr = []
+
+    getProducts().then((data) => {
+      if (data.error) {
+        seterror(data.error);
+      } else {
+        setProducts(data.products);
+        console.log(data);
+        data.products.forEach((product) => {
+          arr.push(product.name);
+        });
+        setProductArray(arr);
+        console.log(`ProductArray: ${productArray}`);
+      }
+    });
+  };
+
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    loadallproducts();
+  }, []);
+  console.log(`Value at searchbar: ${value}`);
 
   return (
     <>
@@ -95,11 +137,17 @@ export default function Navbar(props) {
               </li>
             </ul>
             <form className="d-flex">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={productArray}
+                value={value}
+                sx={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Product Name" />
+                )}
+                onChange={(e, newValue) => setValue(newValue)}
+                freeSolo
               />
               <button className="btn btn-outline-success" type="submit">
                 Search

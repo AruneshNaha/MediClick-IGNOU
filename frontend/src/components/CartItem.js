@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import AuthContext from '../pages/context/AuthContext';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 export default function CartItem(props) {
   const quantityArray = [1, 2, 3];
@@ -24,8 +26,14 @@ export default function CartItem(props) {
         </ul>
       </div>
       <div className="card-body d-flex justify-content-between">
-        <h5 className="card-title">{`Rs. ${props.cartItem.price}`}</h5>
-        <p className="card-text">{`Total Price ${props.cartItem.totalPrice}`}</p>
+        <h5 className="card-title">
+          Product Price: <CurrencyRupeeIcon></CurrencyRupeeIcon>
+          {`${props.cartItem.price}`}
+        </h5>
+        <p className="card-text">
+          Total Price: <CurrencyRupeeIcon></CurrencyRupeeIcon>{' '}
+          {`${props.cartItem.totalPrice}`}
+        </p>
         {/* {`Quantity: ${props.cartItem.quantity}`} */}
 
         <DropdownButton
@@ -64,6 +72,7 @@ export default function CartItem(props) {
           }}
         >
           Remove
+          <RemoveShoppingCartIcon></RemoveShoppingCartIcon>
         </button>
       </div>
     </div>
