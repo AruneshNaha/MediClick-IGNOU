@@ -15,6 +15,7 @@ import AuthContext from './context/AuthContext';
 import CheckOut from './CheckOut';
 import Order from './Order';
 import ManageOrders from './ManageOrders';
+import ProductPage from './ProductPage';
 
 export default function Home() {
 
@@ -40,6 +41,7 @@ export default function Home() {
           <Route exact path="/signin" element={<SignIn showAlert={showAlert}></SignIn>}></Route>
           <Route exact path="/register" element={<Register showAlert={showAlert}></Register>}></Route>
           <Route exact path="/products" element={<Products showAlert={showAlert}></Products>}></Route>
+          <Route exact path="/productInfo" element={<ProductPage showAlert={showAlert}></ProductPage>}></Route>
           <Route exact path="/cart" element={<Cart showAlert={showAlert}></Cart>}></Route>
           <Route exact path="/checkout" element={<CheckOut showAlert={showAlert}></CheckOut>}></Route>
           <Route exact path="/order" element={<Order showAlert={showAlert}></Order>}></Route>

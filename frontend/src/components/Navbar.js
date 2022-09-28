@@ -22,8 +22,7 @@ export default function Navbar(props) {
   const [error, seterror] = useState(false);
 
   const loadallproducts = () => {
-
-    let arr = []
+    let arr = [];
 
     getProducts().then((data) => {
       if (data.error) {
@@ -119,16 +118,6 @@ export default function Navbar(props) {
                   </Link>
                 </li>
               )}
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/products"
-                  tabIndex="-1"
-                  aria-disabled="true"
-                >
-                  View Products
-                </Link>
-              </li>
 
               <li className="nav-item">
                 <Link className="nav-link" to="/about">

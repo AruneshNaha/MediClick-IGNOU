@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard(props) {
   const context = useContext(AuthContext);
@@ -29,6 +30,8 @@ export default function ProductCard(props) {
     });
   };
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     checkIfProductAdded(cart);
   }, []);
@@ -45,7 +48,10 @@ export default function ProductCard(props) {
           <h5 className="card-title d-flex justify-content-between">
             {props.product.name}{' '}
             <span className="badge bg-info">
-              <h5> <CurrencyRupeeIcon></CurrencyRupeeIcon> {props.product.price}</h5>
+              <h5>
+                {' '}
+                <CurrencyRupeeIcon></CurrencyRupeeIcon> {props.product.price}
+              </h5>
             </span>
           </h5>
           <h6>
@@ -55,11 +61,7 @@ export default function ProductCard(props) {
           <div className="d-flex justify-content-between">
             <DropdownButton
               id="dropdown-basic-button"
-              title={
-                productAdded
-                  ? `Added ${quantity} to cart`
-                  : `Add to cart`
-              }
+              title={productAdded ? `Added ${quantity} to cart` : `Add to cart`}
               onSelect={(e) => {
                 if (!productAdded) {
                   setQuantity(e);
@@ -113,7 +115,7 @@ export default function ProductCard(props) {
                   props.createCartArray(cart);
                 }}
               >
-                Remove 
+                Remove
                 <RemoveShoppingCartIcon></RemoveShoppingCartIcon>
               </button>
             ) : (
@@ -121,6 +123,15 @@ export default function ProductCard(props) {
             )}
           </div>
         </div>
+
+        <ul className="list-group list-group-flush">
+          <center>
+              <button className="btn btn-link m-2" onClick={() => {
+                navigate("/productInfo", {state: props.product})
+              }}>View this product</button>
+            
+          </center>
+        </ul>
       </div>
     </div>
   );
