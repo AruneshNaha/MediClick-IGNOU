@@ -15,11 +15,6 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-
-    country: {
-      type: String,
-      required: true,
-    },
     pinCode: {
       type: Number,
       required: true,
@@ -60,35 +55,36 @@ const orderSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  paymentInfo: {
-    id: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
-  },
+  // paymentInfo: {
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   status: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
   paidAt: {
     type: Date,
     required: true,
+    default: Date.now()
   },
-  itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  // itemsPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
+  // taxPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
+  // shippingPrice: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0,
+  // },
   totalPrice: {
     type: Number,
     required: true,
