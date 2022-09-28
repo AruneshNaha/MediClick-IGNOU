@@ -43,6 +43,7 @@ export default function CheckOut(props) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          token: localStorage.getItem('token')
         },
         body: JSON.stringify(order),
       });
