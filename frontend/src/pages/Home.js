@@ -14,6 +14,7 @@ import Cart from './Cart';
 import AuthContext from './context/AuthContext';
 import CheckOut from './CheckOut';
 import Order from './Order';
+import ManageOrders from './ManageOrders';
 
 export default function Home() {
 
@@ -42,6 +43,7 @@ export default function Home() {
           <Route exact path="/cart" element={<Cart showAlert={showAlert}></Cart>}></Route>
           <Route exact path="/checkout" element={<CheckOut showAlert={showAlert}></CheckOut>}></Route>
           <Route exact path="/order" element={<Order showAlert={showAlert}></Order>}></Route>
+          <Route exact path="/manageorders" element={<ManageOrders showAlert={showAlert}></ManageOrders>}></Route>
           <Route
             exact
             path="/forgotpassword"

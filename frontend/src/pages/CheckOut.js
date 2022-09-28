@@ -90,7 +90,7 @@ export default function CheckOut(props) {
             <tbody>
               {cart.map((cartItem) => {
                 return (
-                  <tr>
+                  <tr key={cartItem.productId}>
                     <td>{cartItem.name}</td>
                     <td>
                       <CurrencyRupee></CurrencyRupee>
