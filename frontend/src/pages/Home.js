@@ -13,6 +13,7 @@ import AuthState from './context/AuthState';
 import Cart from './Cart';
 import AuthContext from './context/AuthContext';
 import CheckOut from './CheckOut';
+import Order from './Order';
 
 export default function Home() {
 
@@ -40,6 +41,7 @@ export default function Home() {
           <Route exact path="/products" element={<Products showAlert={showAlert}></Products>}></Route>
           <Route exact path="/cart" element={<Cart showAlert={showAlert}></Cart>}></Route>
           <Route exact path="/checkout" element={<CheckOut showAlert={showAlert}></CheckOut>}></Route>
+          <Route exact path="/order" element={<Order showAlert={showAlert}></Order>}></Route>
           <Route
             exact
             path="/forgotpassword"

@@ -51,7 +51,7 @@ export default function CheckOut(props) {
       const res = await response.json();
       if (response.status === 201) {
         // localStorage.setItem('token', auth.token);
-        navigate('/order');
+        navigate('/order', {state: res});
         props.showAlert('Order created successfully!', 'success');
       } else {
         props.showAlert('Failed to create order', 'danger');
