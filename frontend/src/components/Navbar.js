@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
 
 export default function Navbar(props) {
   const token = localStorage.getItem('token');
   const host = 'http://localhost:4000';
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     return await fetch(`http://localhost:4000/api/v1/products`, {
@@ -125,7 +126,7 @@ export default function Navbar(props) {
                 </Link>
               </li>
             </ul>
-            <form className="d-flex">
+            <div className="d-flex">
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -139,10 +140,29 @@ export default function Navbar(props) {
                 onChange={(e, newValue) => setValue(newValue)}
                 freeSolo
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button
+                className="btn btn-outline-success"
+                onClick={() => {
+                  if (value === null || value === '') {
+                    props.showAlert('Please enter a value in searchbar', 'danger')
+                  }else{
+                    var getIndex = 0;
+                    var index = 0;
+                    console.log(`Value on click: ${value}`);
+                    console.log(`Product Array: ${productArray}`);
+                    for (index = 0; index < products.length; index++) {
+                      if (value === products[index].name) {
+                        getIndex = index;
+                      }
+                    }
+                    setValue('');
+                    navigate('/productInfo', { state: products[getIndex] });
+                  }
+                }}
+              >
                 Search
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </nav>
