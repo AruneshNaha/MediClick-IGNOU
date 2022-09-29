@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Navbar(props) {
   const token = localStorage.getItem('token');
@@ -160,7 +161,7 @@ export default function Navbar(props) {
                   }
                 }}
               >
-                Search
+                <SearchIcon></SearchIcon>
               </button>
             </div>
           </div>
