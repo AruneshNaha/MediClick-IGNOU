@@ -1,67 +1,82 @@
-import React, { useEffect, useState } from "react";
-import AuthContext from "./AuthContext";
+import React, { useEffect, useState } from 'react';
+import AuthContext from './AuthContext';
 
 const AuthState = (props) => {
-  const [authToken, setAuthToken] = useState("");
+  const [authToken, setAuthToken] = useState('');
 
   const authenticate = () => {
-    setAuthToken(localStorage.getItem("token"));
+    setAuthToken(localStorage.getItem('token'));
   };
 
   const [cart, setCart] = useState([]);
+  const [userIsAdmin, setUserIsAdmin] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const adminPrivilege = (res) => {
+    if (res.user.role === 'admin') {
+      setUserIsAdmin(true);
+      localStorage.setItem('role',res.user.role)
+    }
+  };
+
+  const removeAdminPrivilege = () => {
+    setUserIsAdmin(false);
+  };
+
   const updateCart = (cartItem) => {
+    const arr = [...cart, cartItem];
 
-    const arr = [...cart, cartItem]
-
-    setTotalPrice(totalPrice + cartItem.totalPrice)
-    setCart(arr)
-    console.log(`cart array from authstate: ${cart}`)
+    setTotalPrice(totalPrice + cartItem.totalPrice);
+    setCart(arr);
+    console.log(`cart array from authstate: ${cart}`);
   };
 
   const updateTotalPrice = (cart) => {
-
     cart.forEach((cartItem) => {
-      setTotalPrice(totalPrice + cartItem.totalPrice)
-    })
-  }
+      setTotalPrice(totalPrice + cartItem.totalPrice);
+    });
+  };
 
   const removeFromCart = (productId) => {
+    var filteredCart = [];
 
-    var filteredCart = []
-    
     cart.forEach((cartItem) => {
-      if(cartItem.productId !== productId){
-        filteredCart.push(cartItem)
+      if (cartItem.productId !== productId) {
+        filteredCart.push(cartItem);
       }
-    })
-    
-    setCart(filteredCart)
-  }
+    });
+
+    setCart(filteredCart);
+  };
 
   const emptyCart = () => {
-    setCart([])
-    setTotalPrice(0)
-  }
+    setCart([]);
+    setTotalPrice(0);
+  };
 
-  console.log(cart)
+  console.log(cart);
 
   useEffect(() => {
-    setCart(cart)
-    setTotalPrice(totalPrice)
-  }, [])
-  
+    setCart(cart);
+    setTotalPrice(totalPrice);
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ authToken, 
-    authenticate, 
-    cart, 
-    emptyCart,
-    updateCart, 
-    removeFromCart,
-    updateTotalPrice,
-    totalPrice }}>
+    <AuthContext.Provider
+      value={{
+        authToken,
+        authenticate,
+        userIsAdmin,
+        adminPrivilege,
+        removeAdminPrivilege,
+        cart,
+        emptyCart,
+        updateCart,
+        removeFromCart,
+        updateTotalPrice,
+        totalPrice,
+      }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

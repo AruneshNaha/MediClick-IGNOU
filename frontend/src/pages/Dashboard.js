@@ -10,6 +10,12 @@ import { useNavigate } from 'react-router-dom';
 export default function Dashboard(props) {
   const navigate = useNavigate();
 
+  const context = useContext(AuthContext);
+  const { authToken } = context;
+  const getAdmin = localStorage.getItem('role');
+
+  console.log(`Authtoken from auth context: ${authToken}`);
+
   return (
     <AuthState>
       <div
@@ -17,7 +23,16 @@ export default function Dashboard(props) {
         style={{ margin: '30px 0px', marginTop: '10px' }}
       >
         <center>
-          <h1>Welcome to MediClick</h1>
+          <h1>
+            Welcome to MediClick
+            {getAdmin === 'admin' ? (
+              <h5>
+                <span class="badge bg-danger">Admin privilege</span>
+              </h5>
+            ) : (
+              ''
+            )}
+          </h1>
         </center>
       </div>
       <center>

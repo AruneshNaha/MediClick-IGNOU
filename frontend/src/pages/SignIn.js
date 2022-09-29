@@ -12,7 +12,7 @@ function SignIn(props) {
   const host = 'http://localhost:4000';
 
   const context = useContext(AuthContext);
-  const { authenticate } = context;
+  const { authenticate, authToken, userIsAdmin, adminPrivilege } = context;
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -37,8 +37,10 @@ function SignIn(props) {
       if (response.status === 200) {
         localStorage.setItem('token', auth.token);
         authenticate();
+        adminPrivilege(auth);
         navigate('/');
         props.showAlert('You are successfully signed in!', 'success');
+        console.log(`Authtoken from auth context: ${authToken}`);
       } else {
         props.showAlert('Invalid Credentials', 'danger');
       }

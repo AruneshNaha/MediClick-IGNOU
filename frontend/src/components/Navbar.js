@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AuthContext from '../pages/context/AuthContext';
 
 export default function Navbar(props) {
   const token = localStorage.getItem('token');
   const host = 'http://localhost:4000';
   const navigate = useNavigate();
+  const context = useContext(AuthContext);
+  const { userIsAdmin, adminPrivilege, removeAdminPrivilege, authToken } =
+    context;
+    const storageValue = localStorage.getItem('role')
+
+  console.log(userIsAdmin, authToken);
 
   const getProducts = async () => {
     return await fetch(`http://localhost:4000/api/v1/products`, {
@@ -73,6 +80,15 @@ export default function Navbar(props) {
                   Home
                 </a>
               </li>
+              {userIsAdmin === true || storageValue === 'admin' ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/adminDashboard">
+                    <span class="badge bg-danger">Admin Dashboard</span>
+                  </Link>
+                </li>
+              ) : (
+                ''
+              )}
               {token === null && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/signin">
@@ -99,6 +115,7 @@ export default function Navbar(props) {
                           method: 'GET',
                         });
                         localStorage.clear();
+                        removeAdminPrivilege();
 
                         props.showAlert(
                           'You are successfully logged out!',
@@ -145,8 +162,11 @@ export default function Navbar(props) {
                 className="btn btn-outline-success"
                 onClick={() => {
                   if (value === null || value === '') {
-                    props.showAlert('Please enter a value in searchbar', 'danger')
-                  }else{
+                    props.showAlert(
+                      'Please enter a value in searchbar',
+                      'danger'
+                    );
+                  } else {
                     var getIndex = 0;
                     var index = 0;
                     console.log(`Value on click: ${value}`);
