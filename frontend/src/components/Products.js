@@ -55,7 +55,7 @@ export default function Products(props) {
       </div>
     <div className="d-grip gap-2">
     <center><button className="btn btn-primary" type="button" onClick={() => {
-      navigate('/cart', {state: cart})
+      navigate('/cart')
     }}>Go to cart <ShoppingCartIcon></ShoppingCartIcon> </button></center>
     </div>
       <div className="container m-5">
