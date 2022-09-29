@@ -31,6 +31,7 @@ export default function ProductCard(props) {
   };
 
   const navigate = useNavigate()
+  const imgsource = require(`../backend/uploads/${props.product._id}.jpg`)
 
   useEffect(() => {
     checkIfProductAdded(cart);
@@ -40,7 +41,7 @@ export default function ProductCard(props) {
     <div className="col-12 col-md-6 col-lg-4">
       <div className="card">
         <img
-          src={require(`../backend/uploads/${props.product._id}.jpg`)}
+          src={imgsource? imgsource : `${props.product.images}`}
           alt="Product imag not found!"
           className="card-img-top"
         />

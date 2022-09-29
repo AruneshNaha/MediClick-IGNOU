@@ -4,7 +4,7 @@ const User = require('../models/userModels');
 
 exports.isAuthenticatedUser = async (req, res, next) => {
   const token = req.header('token');
-  console.log(token);
+  // console.log(token);
 
   if (token === null) {
     return next(new ErrorHandler('Please login to access this resource', 401));

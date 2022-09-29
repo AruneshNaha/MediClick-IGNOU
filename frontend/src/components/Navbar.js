@@ -83,7 +83,7 @@ export default function Navbar(props) {
               {userIsAdmin === true || storageValue === 'admin' ? (
                 <li className="nav-item">
                   <Link className="nav-link" to="/adminDashboard">
-                    <span class="badge bg-danger">Admin Dashboard</span>
+                    <span className="badge bg-danger">Admin Dashboard</span>
                   </Link>
                 </li>
               ) : (

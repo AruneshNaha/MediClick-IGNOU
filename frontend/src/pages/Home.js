@@ -50,7 +50,7 @@ export default function Home() {
           <Route exact path="/order" element={<Order showAlert={showAlert}></Order>}></Route>
           <Route exact path="/manageorders" element={<ManageOrders showAlert={showAlert}></ManageOrders>}></Route>
           <Route exact path="/adminDashboard" element={<AdminDashboard showAlert={showAlert}></AdminDashboard>}></Route>
-          <Route exact path="/adminDashboard/createProduct" element={<CreateProduct showAlert={showAlert}></CreateProduct>}></Route>
+          <Route exact path="/createProduct" element={<CreateProduct showAlert={showAlert}></CreateProduct>}></Route>
           <Route
             exact
             path="/forgotpassword"
