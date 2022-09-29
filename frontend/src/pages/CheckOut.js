@@ -38,27 +38,32 @@ export default function CheckOut(props) {
   const navigate = useNavigate();
 
   const createOrder = async () => {
-    try {
-      const response = await fetch(`${host}/api/v1/order/new`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: localStorage.getItem('token')
-        },
-        body: JSON.stringify(order),
-      });
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      try {
+        const response = await fetch(`${host}/api/v1/order/new`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token'),
+          },
+          body: JSON.stringify(order),
+        });
 
-      const res = await response.json();
-      if (response.status === 201) {
-        // localStorage.setItem('token', auth.token);
-        navigate('/order', {state: res});
-        props.showAlert('Order created successfully!', 'success');
-      } else {
-        props.showAlert('Failed to create order', 'danger');
+        const res = await response.json();
+        if (response.status === 201) {
+          // localStorage.setItem('token', auth.token);
+          navigate('/order', { state: res });
+          props.showAlert('Order created successfully!', 'success');
+        } else {
+          props.showAlert('Failed to create order', 'danger');
+        }
+        console.log(res);
+      } catch (error) {
+        console.log(error);
       }
-      console.log(res)
-    } catch (error) {
-      console.log(error);
+    }else{
+      props.showAlert("Please login first", 'danger')
     }
   };
 
