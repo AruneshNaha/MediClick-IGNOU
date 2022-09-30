@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 export default function AddProductImage(props) {
   const { productId } = useParams();
+  const navigate = useNavigate()
+  const [showUploadButton, setShowUploadButton] = useState(0)
 
-  const [formData, setFormData] = useState(new FormData());
+  const formdata = new FormData();
   const host = 'http://localhost:4000';
 
   const handleChange = (e) => {
     const value = e.target.files[0];
     console.log(value);
-    setFormData(formData.set('images', value))
-    setFormData(formData.set('id', productId))
-    // formData.set("id", productId);
-    // setUploadBody({...uploadBody, [name]: value})
-    console.log(formData);
-    // uploadImage();
-  };
+    formdata.append('id', productId);
 
-  // useEffect(() => {
-  //   formData.set('id', productId);
-  //   console.log(formData);
-  // }, []);
+    formdata.append('images', value);
+    setShowUploadButton(1)
+    for (var key of formdata.entries()) {
+      console.log(key[0] + ': ' + key[1]);
+    }
+  };
 
   const uploadImage = async () => {
     const token = localStorage.getItem('token');
@@ -30,21 +28,14 @@ export default function AddProductImage(props) {
       try {
         const response = await fetch(`${host}/api/v1/upload`, {
           method: 'POST',
-          // headers: {
-          //   'Content-Type': 'application/json',
-          //   token: localStorage.getItem('token'),
-          // },
-          body: formData,
+          body: formdata,
         });
 
         const res = await response.json();
-        if (response.status === 201) {
-          // localStorage.setItem('token', auth.token);
-          // navigate('/order', { state: res });
-          // setProductId(res.product._id);
+        if (response.status === 200) {
           console.log(`Message from upload product image: ${res.message}`);
           props.showAlert('Product image uploaded successfully!', 'success');
-          // setImageButton(true);
+          navigate('/adminDashboard')
         } else {
           props.showAlert('Failed to create product', 'danger');
         }
@@ -63,7 +54,7 @@ export default function AddProductImage(props) {
         <Button variant="contained" component="label">
           Select an Image
           <input
-            accept="image/*"
+            accept="image"
             name="images"
             placeholder="choose a file"
             type="file"
@@ -71,9 +62,11 @@ export default function AddProductImage(props) {
           />
         </Button>
       </center>
-      <button className="btn btn-primary" onClick={uploadImage}>
+      <center>
+      {showUploadButton ? <button className="btn btn-primary m-3" onClick={uploadImage}>
         Upload this image
-      </button>
+      </button> : ''}
+      </center>
     </div>
   );
 }
