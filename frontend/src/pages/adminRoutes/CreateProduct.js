@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 export default function CreateProduct(props) {
   const [product, setProduct] = useState({
@@ -11,7 +11,9 @@ export default function CreateProduct(props) {
     category: '',
   });
 
-  const [productId, setProductId] = useState('')
+  const [productId, setProductId] = useState('');
+
+  const [imageButton, setImageButton] = useState(false);
 
   const navigate = useNavigate();
   const host = 'http://localhost:4000';
@@ -38,10 +40,11 @@ export default function CreateProduct(props) {
         const res = await response.json();
         if (response.status === 201) {
           // localStorage.setItem('token', auth.token);
-          // navigate('/order', { state: res });
-          setProductId(res.product._id)
-          console.log(`Product ID from createProduct: ${res.product._id}`)
+          navigate(`/createProduct/${res.product._id}`);
+          setProductId(res.product._id);
+          console.log(`Product ID from createProduct: ${res.product._id}`);
           props.showAlert('Product created successfully!', 'success');
+          setImageButton(true);
         } else {
           props.showAlert('Failed to create product', 'danger');
         }
@@ -70,11 +73,12 @@ export default function CreateProduct(props) {
       <div className="container">
         <div className="center">
           <h4 className="text-muted">
-            #1 Enter the product Information correctly then scroll down to the
-            next form
+            {imageButton
+              ? '#2 Click on upload to upload a product image now '
+              : '#1 Enter the product Information correctly then scroll down to the next form'}
           </h4>
         </div>
-        <div className="container m-3">
+        {imageButton ? <Outlet/> : <div className="container m-3">
           <h4>Product info:</h4>
           <TextField
             fullWidth
@@ -131,14 +135,20 @@ export default function CreateProduct(props) {
             onChange={handleChange}
             value={product.description}
           />
-        </div>
-        <div className="container">
+        </div>}
+        
+        {imageButton ? (
+          <center><h5>Upload image here</h5></center>
+        ) : (
+          <div className="container">
           <center>
             <button className="btn btn-primary" onClick={createProduct}>
               Create this product with above information
             </button>
           </center>
         </div>
+        )}
+        {/* <Outlet /> */}
       </div>
     </>
   );

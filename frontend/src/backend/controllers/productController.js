@@ -27,7 +27,7 @@ exports.uploadProductImage = async (req, res) => {
       });
     } else {
       res.status(200).json({
-        message: 'Succesfully uploaded!',
+        message: 'Image Succesfully uploaded!',
         filename: `uploads/${req.file.filename}`,
       });
     }

@@ -19,7 +19,7 @@ router
   .post(isAuthenticatedUser, authorizeRoles('admin'), createProduct);
 router
   .route('/upload')
-  .post(isAuthenticatedUser, authorizeRoles('admin'), uploadProductImage);
+  .post(uploadProductImage);
 router
   .route('/product/:id')
   .put(isAuthenticatedUser, authorizeRoles('admin'), updateProduct)
