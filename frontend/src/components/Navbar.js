@@ -14,7 +14,7 @@ export default function Navbar(props) {
     context;
     const storageValue = localStorage.getItem('role')
 
-  console.log(userIsAdmin, authToken);
+  // console.log(userIsAdmin, authToken);
 
   const getProducts = async () => {
     return await fetch(`http://localhost:4000/api/v1/products`, {
@@ -38,12 +38,12 @@ export default function Navbar(props) {
         seterror(data.error);
       } else {
         setProducts(data.products);
-        console.log(data);
+        // console.log(data);
         data.products.forEach((product) => {
           arr.push(product.name);
         });
         setProductArray(arr);
-        console.log(`ProductArray: ${productArray}`);
+        // console.log(`ProductArray: ${productArray}`);
       }
     });
   };
@@ -53,7 +53,7 @@ export default function Navbar(props) {
   useEffect(() => {
     loadallproducts();
   }, []);
-  console.log(`Value at searchbar: ${value}`);
+  // console.log(`Value at searchbar: ${value}`);
 
   return (
     <>

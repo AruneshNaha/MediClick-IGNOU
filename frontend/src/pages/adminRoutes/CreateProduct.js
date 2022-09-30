@@ -1,7 +1,8 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function CreateProduct() {
+export default function CreateProduct(props) {
   const [product, setProduct] = useState({
     name: '',
     price: '',
@@ -10,10 +11,47 @@ export default function CreateProduct() {
     category: '',
   });
 
+  const [productId, setProductId] = useState('')
+
+  const navigate = useNavigate();
+  const host = 'http://localhost:4000';
+
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
 
     console.log(product);
+  };
+
+  const createProduct = async () => {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      try {
+        const response = await fetch(`${host}/api/v1/product/new`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token'),
+          },
+          body: JSON.stringify(product),
+        });
+
+        const res = await response.json();
+        if (response.status === 201) {
+          // localStorage.setItem('token', auth.token);
+          // navigate('/order', { state: res });
+          setProductId(res.product._id)
+          console.log(`Product ID from createProduct: ${res.product._id}`)
+          props.showAlert('Product created successfully!', 'success');
+        } else {
+          props.showAlert('Failed to create product', 'danger');
+        }
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      props.showAlert('Please login as admin first', 'danger');
+    }
   };
 
   return (
@@ -32,7 +70,8 @@ export default function CreateProduct() {
       <div className="container">
         <div className="center">
           <h4 className="text-muted">
-            #1 Enter the product Information correctly
+            #1 Enter the product Information correctly then scroll down to the
+            next form
           </h4>
         </div>
         <div className="container m-3">
@@ -92,6 +131,13 @@ export default function CreateProduct() {
             onChange={handleChange}
             value={product.description}
           />
+        </div>
+        <div className="container">
+          <center>
+            <button className="btn btn-primary" onClick={createProduct}>
+              Create this product with above information
+            </button>
+          </center>
         </div>
       </div>
     </>
