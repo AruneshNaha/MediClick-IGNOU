@@ -30,7 +30,7 @@ export default function AdminDashboard() {
             <button className="btn btn-link" onClick={() => {navigate('/createProduct')}}>Create a product</button>
           </li>
           <li>
-            <button className="btn btn-link">Edit a product</button>
+            <button className="btn btn-link" onClick={() => {navigate('/manageProducts')}}>Manage products</button>
           </li>
           <li>
             <button className="btn btn-link">
