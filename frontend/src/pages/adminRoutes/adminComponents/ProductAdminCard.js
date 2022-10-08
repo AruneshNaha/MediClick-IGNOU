@@ -30,7 +30,11 @@ export default function ProductAdminCard(props) {
           </h6>
           <p className="card-text">{props.product.description}</p>
           <div className="d-flex justify-content-between">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary"
+            onClick={() => {
+                props.editProduct(props.product._id)
+            }}
+            >
               <EditIcon></EditIcon>
               Edit
             </button>
