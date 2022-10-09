@@ -75,13 +75,13 @@ export default function ManageProducts(props) {
 
     await fetch(`${localhost}/api/v1/product/${productId}`, {
       method: 'GET',
-    }).then(async(res) => {
+    }).then(async (res) => {
       const productInfo = await res.json();
 
-      console.log(productInfo.product)
+      console.log(productInfo.product);
 
-      const product = await productInfo.product
-      console.log(product)
+      const product = await productInfo.product;
+      console.log(product);
       setEditedProd({
         name: product.name,
         description: product.description,
@@ -89,12 +89,36 @@ export default function ManageProducts(props) {
         stock: product.stock,
         price: product.price,
       });
-      console.log(editedProd)
+      console.log(editedProd);
     });
   };
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const sendProductToDatabase = async (e) => {
+    e.preventDefault()
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (token && role === 'admin') {
+      const response = await fetch(`${localhost}/api/v1/product/${productId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token,
+        },
+        body: JSON.stringify(editedProd),
+      });
+
+      if (response.status === 200) {
+        loadallproducts();
+        props.showAlert('Product updated successfully!', 'success');
+        closeModal()
+      } else {
+        props.showAlert('Failed to update product', 'danger');
+      }
+    }
   };
 
   useEffect(() => {
@@ -237,7 +261,7 @@ export default function ManageProducts(props) {
                           'Product image uploaded successfully!',
                           'success'
                         );
-                        navigate('/manageProducts');
+                        closeModal();
                       } else {
                         console.log(
                           `Message from upload product image: ${res.message}`
@@ -258,7 +282,7 @@ export default function ManageProducts(props) {
         </ModalBody>
         <ModalFooter>
           <button
-            // onClick={updateNoteToBackend}
+            onClick={sendProductToDatabase}
             className="btn btn-primary"
             // disabled={note.title.length < 5 || note.description.length < 5}
           >
