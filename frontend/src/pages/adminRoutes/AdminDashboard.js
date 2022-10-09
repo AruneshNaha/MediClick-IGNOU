@@ -33,11 +33,6 @@ export default function AdminDashboard() {
             <button className="btn btn-link" onClick={() => {navigate('/manageProducts')}}>Manage products</button>
           </li>
           <li>
-            <button className="btn btn-link">
-              Delete or update stock of a product
-            </button>
-          </li>
-          <li>
             <button className="btn btn-link">Manage all orders</button>
           </li>
           <li>

@@ -19,11 +19,22 @@ export default function ManageProducts(props) {
   const [error, seterror] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState('');
-  const [product, setProduct] = useState({});
+  const [editedProd, setEditedProd] = useState({
+    name: '',
+    description: '',
+    category: '',
+    stock: '',
+    price: '',
+  });
 
   const formdata = new FormData();
 
   const localhost = 'http://localhost:4000';
+
+  const handleChange = (e) => {
+    setEditedProd({ ...editedProd, [e.target.name]: e.target.value });
+    console.log(editedProd);
+  };
 
   const loadallproducts = () => {
     getProducts().then((data) => {
@@ -62,16 +73,24 @@ export default function ManageProducts(props) {
     setProductId(productId);
     setShowModal(true);
 
-    const response = await fetch(
-      `${localhost}/api/v1/product/${productId}`,
-      {
-        method: 'GET',
-      }
-    );
-    const productInfo = await response.json()
-    await setProduct(productInfo.product);
+    await fetch(`${localhost}/api/v1/product/${productId}`, {
+      method: 'GET',
+    }).then(async(res) => {
+      const productInfo = await res.json();
 
-    console.log(product)
+      console.log(productInfo.product)
+
+      const product = await productInfo.product
+      console.log(product)
+      setEditedProd({
+        name: product.name,
+        description: product.description,
+        category: product.category,
+        stock: product.stock,
+        price: product.price,
+      });
+      console.log(editedProd)
+    });
   };
 
   const closeModal = () => {
@@ -108,8 +127,8 @@ export default function ManageProducts(props) {
               <input
                 name="name"
                 type="text"
-                // onChange={onChange}
-                value={product.name}
+                onChange={handleChange}
+                value={editedProd.name}
                 className="form-control"
                 id="name"
                 minLength={5}
@@ -124,8 +143,8 @@ export default function ManageProducts(props) {
               <input
                 name="description"
                 type="text"
-                value={product.description}
-                // onChange={onChange}
+                value={editedProd.description}
+                onChange={handleChange}
                 className="form-control"
                 id="description"
                 minLength={5}
@@ -139,8 +158,8 @@ export default function ManageProducts(props) {
               <input
                 name="category"
                 type="text"
-                value={product.category}
-                // onChange={onChange}
+                value={editedProd.category}
+                onChange={handleChange}
                 className="form-control"
                 id="category"
                 minLength={5}
@@ -154,8 +173,8 @@ export default function ManageProducts(props) {
               <input
                 name="price"
                 type="number"
-                value={product.price}
-                // onChange={onChange}
+                value={editedProd.price}
+                onChange={handleChange}
                 className="form-control"
                 id="price"
                 minLength={5}
@@ -169,8 +188,8 @@ export default function ManageProducts(props) {
               <input
                 name="stock"
                 type="number"
-                value={product.stock}
-                // onChange={onChange}
+                value={editedProd.stock}
+                onChange={handleChange}
                 className="form-control"
                 id="stock"
                 minLength={5}
