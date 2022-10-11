@@ -1,5 +1,6 @@
 import CurrencyRupee from '@mui/icons-material/CurrencyRupee';
 import React, { useEffect, useState } from 'react';
+import OrderCard from '../components/OrderCard';
 
 export default function ManageOrders() {
   const [res, setRes] = useState({});
@@ -39,46 +40,9 @@ export default function ManageOrders() {
           <mark>Your orders:</mark>
         </h1>
 
-        {orderDetails.map((order) => {
+        {orderDetails.map((order, i) => {
           return (
-            <div className="card p-3">
-              <div className="card-text">
-                <p key={order._id} className="card-text">
-                  <h3>Order ID: {order._id}</h3>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Your Shipping Information
-                  </h6>
-                  Address: {order.shippingInfo.address}{' '}
-                  {order.shippingInfo.city} {order.shippingInfo.pinCode}{' '}
-                  {order.shippingInfo.state} <br />
-                  Phone No. {order.phoneNo}
-                </p>
-                <h6 className="card-subtitle mb-2 text-muted">
-                  Your order Information
-                </h6>
-                <p className="card-text">
-                  <ul className="list-group list-group-flush">
-                    {order.orderItems.map((orderItem) => {
-                      return (
-                        <li
-                          key={orderItem.productId}
-                          className="list-group-item"
-                        >
-                          {orderItem.name} * {orderItem.quantity} <br /> Price:{' '}
-                          <CurrencyRupee></CurrencyRupee> {orderItem.price}{' '}
-                          <br /> Total Price: <CurrencyRupee></CurrencyRupee>
-                          {orderItem.totalPrice}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </p>
-                <h6 className="card-subtitle mb-2 text-muted">
-                  Total Order Value: <CurrencyRupee></CurrencyRupee>
-                  {order.totalPrice}
-                </h6>
-              </div>
-            </div>
+            <OrderCard order={order} key={order._id} index={i}></OrderCard>
           );
         })}
       </div>
