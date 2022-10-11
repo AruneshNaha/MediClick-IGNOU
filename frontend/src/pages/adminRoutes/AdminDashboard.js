@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PeopleIcon from '@mui/icons-material/People';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import CategoryIcon from '@mui/icons-material/Category';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 export default function AdminDashboard() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -27,17 +30,38 @@ export default function AdminDashboard() {
       <center>
         <ul className="list-group">
           <li>
-            <button className="btn btn-link" onClick={() => {navigate('/createProduct')}}>Create a product</button>
+            <button
+              className="btn btn-link"
+              onClick={() => {
+                navigate('/createProduct');
+              }}
+            >
+              <Inventory2Icon></Inventory2Icon> Create a product
+            </button>
           </li>
           <li>
-            <button className="btn btn-link" onClick={() => {navigate('/manageProducts')}}>Manage products</button>
+            <button
+              className="btn btn-link"
+              onClick={() => {
+                navigate('/manageProducts');
+              }}
+            >
+              <CategoryIcon></CategoryIcon> Manage products
+            </button>
           </li>
           <li>
-            <button className="btn btn-link">Manage all orders</button>
+            <button
+              className="btn btn-link"
+              onClick={() => {
+                navigate('/manageOrdersAdmin');
+              }}
+            >
+              <ShoppingBasketIcon></ShoppingBasketIcon> Manage all orders
+            </button>
           </li>
           <li>
             <button className="btn btn-link">
-              Get all users and manage them
+              <PeopleIcon></PeopleIcon> Manage users
             </button>
           </li>
           <li>
@@ -47,7 +71,11 @@ export default function AdminDashboard() {
           </li>
         </ul>
       </center>
-      <center><div className="text-muted mb-2"><h5>Click on any of the above link</h5></div></center>
+      <center>
+        <div className="text-muted mb-2">
+          <h5>Click on any of the above link</h5>
+        </div>
+      </center>
     </div>
   );
 }

@@ -20,6 +20,7 @@ import AdminDashboard from './adminRoutes/AdminDashboard';
 import CreateProduct from './adminRoutes/CreateProduct';
 import AddProductImage from './adminRoutes/AddProductImage';
 import ManageProducts from './adminRoutes/ManageProducts';
+import ManageOrdersAdmin from './adminRoutes/ManageOrdersAdmin';
 
 export default function Home() {
 
@@ -53,6 +54,7 @@ export default function Home() {
           <Route exact path="/manageorders" element={<ManageOrders showAlert={showAlert}></ManageOrders>}></Route>
           <Route exact path="/adminDashboard" element={<AdminDashboard showAlert={showAlert}></AdminDashboard>}></Route>
           <Route exact path="/manageProducts" element={<ManageProducts showAlert={showAlert}></ManageProducts>}></Route>
+          <Route exact path="/manageOrdersAdmin" element={<ManageOrdersAdmin showAlert={showAlert}></ManageOrdersAdmin>}></Route>
           <Route exact path="/createProduct" element={<CreateProduct showAlert={showAlert}></CreateProduct>}>
           <Route path=":productId" element={<AddProductImage showAlert={showAlert}/>}>
         </Route>

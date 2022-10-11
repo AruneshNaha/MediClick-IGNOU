@@ -80,6 +80,11 @@ export default function Navbar(props) {
                   Home
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" aria-current="page" href="/manageorders">
+                  Manage Orders
+                </a>
+              </li>
               {userIsAdmin === true || storageValue === 'admin' ? (
                 <li className="nav-item">
                   <Link className="nav-link" to="/adminDashboard">

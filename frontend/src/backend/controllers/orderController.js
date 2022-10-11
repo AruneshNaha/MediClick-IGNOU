@@ -98,9 +98,9 @@ exports.updateOrderStatus = async (req, res, next) => {
       );
     }
 
-    order.orderItems.forEach(async (order) => {
-      await updateStock(order.product, order.quantity);
-    });
+    // order.orderItems.forEach(async (order) => {
+    //   await updateStock(order.product, order.quantity);
+    // });
 
     order.orderStatus = req.body.status;
 
@@ -117,12 +117,12 @@ exports.updateOrderStatus = async (req, res, next) => {
   }
 };
 
-const updateStock = async (id, quantity) => {
-  const product = await Product.findById(id);
+// const updateStock = async (id, quantity) => {
+//   const product = await Product.findById(id);
 
-  product.stock -= quantity;
-  await product.save({ validateBeforeSave: false });
-};
+//   product.stock -= quantity;
+//   await product.save({ validateBeforeSave: false });
+// };
 
 //delete Order -- Admin
 exports.deleteOrder = async (req, res, next) => {
