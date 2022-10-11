@@ -40,6 +40,12 @@ export default function ManageOrders() {
           <mark>Your orders:</mark>
         </h1>
 
+        <center>
+          <h4 className="text-muted">
+            {orderDetails.length === 0 ? 'No orders to view' : ''}
+          </h4>
+        </center>
+
         {orderDetails.map((order, i) => {
           return (
             <OrderCard order={order} key={order._id} index={i}></OrderCard>

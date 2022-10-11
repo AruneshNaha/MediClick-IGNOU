@@ -157,7 +157,9 @@ export default function OrderAdminCard(props) {
           </button>
         ) : (
           <div className="d-flex justify-content-between">
-            <button className="btn btn-danger m-3">Delete this order</button>
+            <button className="btn btn-danger m-3" onClick={() => {
+              props.deleteOrder(props.order._id)
+            }}>Delete this order</button>
           </div>
         )}
 

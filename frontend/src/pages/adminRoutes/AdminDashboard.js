@@ -60,7 +60,9 @@ export default function AdminDashboard() {
             </button>
           </li>
           <li>
-            <button className="btn btn-link">
+            <button className="btn btn-link" onClick={() => {
+                navigate('/manageUsersAdmin');
+              }}>
               <PeopleIcon></PeopleIcon> Manage users
             </button>
           </li>

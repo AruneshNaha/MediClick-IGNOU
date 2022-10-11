@@ -36,6 +36,7 @@ function SignIn(props) {
       const auth = await response.json();
       if (response.status === 200) {
         localStorage.setItem('token', auth.token);
+        localStorage.setItem('id', auth.user._id);
         authenticate();
         adminPrivilege(auth);
         navigate('/');

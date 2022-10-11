@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import SignIn from './SignIn';
 import NotFound from './NotFound';
 import Register from './Register';
-import Products from '../components/Products';
+import Products from './Products';
 import ForgotPassword from './ForgotPassword';
 import AuthState from './context/AuthState';
 import Cart from './Cart';
@@ -21,6 +21,7 @@ import CreateProduct from './adminRoutes/CreateProduct';
 import AddProductImage from './adminRoutes/AddProductImage';
 import ManageProducts from './adminRoutes/ManageProducts';
 import ManageOrdersAdmin from './adminRoutes/ManageOrdersAdmin';
+import ManageUsers from './adminRoutes/ManageUsers';
 
 export default function Home() {
 
@@ -54,6 +55,7 @@ export default function Home() {
           <Route exact path="/manageorders" element={<ManageOrders showAlert={showAlert}></ManageOrders>}></Route>
           <Route exact path="/adminDashboard" element={<AdminDashboard showAlert={showAlert}></AdminDashboard>}></Route>
           <Route exact path="/manageProducts" element={<ManageProducts showAlert={showAlert}></ManageProducts>}></Route>
+          <Route exact path="/manageUsersAdmin" element={<ManageUsers showAlert={showAlert}></ManageUsers>}></Route>
           <Route exact path="/manageOrdersAdmin" element={<ManageOrdersAdmin showAlert={showAlert}></ManageOrdersAdmin>}></Route>
           <Route exact path="/createProduct" element={<CreateProduct showAlert={showAlert}></CreateProduct>}>
           <Route path=":productId" element={<AddProductImage showAlert={showAlert}/>}>

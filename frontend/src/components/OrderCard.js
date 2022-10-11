@@ -1,20 +1,17 @@
 import CurrencyRupee from '@mui/icons-material/CurrencyRupee';
-import React from 'react'
+import React from 'react';
 
 export default function OrderCard(props) {
-
-    const orderStatus =props.order.orderStatus;
-
+  const orderStatus = props.order.orderStatus;
 
   return (
     <div className="card p-3 m-5">
       <div className="d-flex justify-content-start">
         <h4 className="fw-light">Order {props.index + 1}</h4>
-        
       </div>
 
       <div className="d-flex justify-content-between">
-      <h4 className="fw-light">Order ID: {props.order._id}</h4>
+        <h4 className="fw-light">Order ID: {props.order._id}</h4>
         <h4>
           Status:{' '}
           <span
@@ -97,14 +94,6 @@ export default function OrderCard(props) {
           </div>
         </div>
 
-        {orderStatus === 'Processing' ? (
-          ""
-        ) : (
-          <div className="d-flex justify-content-between">
-            <button className="btn btn-danger m-3">Delete this order</button>
-          </div>
-        )}
-
         <p className="card-text"></p>
         <h6 className="card-subtitle mb-2 text-muted">
           Total Order Value: <CurrencyRupee></CurrencyRupee>
@@ -112,5 +101,5 @@ export default function OrderCard(props) {
         </h6>
       </div>
     </div>
-  )
+  );
 }

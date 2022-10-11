@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ProductCard from './ProductCard';
+import ProductCard from '../components/ProductCard';
 
 export default function Products(props) {
   const getProducts = async () => {
@@ -60,7 +60,7 @@ export default function Products(props) {
     </div>
       <div className="container m-5">
         <div className="row m-3">
-          {products.map((product) => {
+          { products.length !==0 ? products.map((product) => {
             return (
               <ProductCard
                 key={product._id}
@@ -69,7 +69,7 @@ export default function Products(props) {
                 createCartArray={createCartArray}
               ></ProductCard>
             );
-          })}
+          }): "No products to view"}
         </div>
       </div>
     </>
