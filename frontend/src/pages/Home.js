@@ -24,42 +24,100 @@ import ManageOrdersAdmin from './adminRoutes/ManageOrdersAdmin';
 import ManageUsers from './adminRoutes/ManageUsers';
 
 export default function Home() {
+  const [alert, setAlert] = useState('');
 
-  const [alert, setAlert] = useState("")
-
-  const showAlert = (message, type)=>{
+  const showAlert = (message, type) => {
     setAlert({
       msg: message,
-      type: type
-    })
+      type: type,
+    });
     setTimeout(() => {
-        setAlert(null);
+      setAlert(null);
     }, 3000);
-}
+  };
 
   return (
-      <Router>
-            <AuthState>
-
+    <Router>
+      <AuthState>
         <Navbar showAlert={showAlert}></Navbar>
         <FireAlert alert={alert}></FireAlert>
         <Routes>
-          <Route exact path="/" element={<Dashboard showAlert={showAlert}></Dashboard>}></Route>
-          <Route exact path="/signin" element={<SignIn showAlert={showAlert}></SignIn>}></Route>
-          <Route exact path="/register" element={<Register showAlert={showAlert}></Register>}></Route>
-          <Route exact path="/products" element={<Products showAlert={showAlert}></Products>}></Route>
-          <Route exact path="/productInfo" element={<ProductPage showAlert={showAlert}></ProductPage>}></Route>
-          <Route exact path="/cart" element={<Cart showAlert={showAlert}></Cart>}></Route>
-          <Route exact path="/checkout" element={<CheckOut showAlert={showAlert}></CheckOut>}></Route>
-          <Route exact path="/order" element={<Order showAlert={showAlert}></Order>}></Route>
-          <Route exact path="/manageorders" element={<ManageOrders showAlert={showAlert}></ManageOrders>}></Route>
-          <Route exact path="/adminDashboard" element={<AdminDashboard showAlert={showAlert}></AdminDashboard>}></Route>
-          <Route exact path="/manageProducts" element={<ManageProducts showAlert={showAlert}></ManageProducts>}></Route>
-          <Route exact path="/manageUsersAdmin" element={<ManageUsers showAlert={showAlert}></ManageUsers>}></Route>
-          <Route exact path="/manageOrdersAdmin" element={<ManageOrdersAdmin showAlert={showAlert}></ManageOrdersAdmin>}></Route>
-          <Route exact path="/createProduct" element={<CreateProduct showAlert={showAlert}></CreateProduct>}>
-          <Route path=":productId" element={<AddProductImage showAlert={showAlert}/>}>
-        </Route>
+          <Route
+            exact
+            path="/"
+            element={<Dashboard showAlert={showAlert}></Dashboard>}
+          ></Route>
+          <Route
+            exact
+            path="/signin"
+            element={<SignIn showAlert={showAlert}></SignIn>}
+          ></Route>
+          <Route
+            exact
+            path="/register"
+            element={<Register showAlert={showAlert}></Register>}
+          ></Route>
+          <Route
+            exact
+            path="/products"
+            element={<Products showAlert={showAlert}></Products>}
+          ></Route>
+          <Route
+            exact
+            path="/productInfo"
+            element={<ProductPage showAlert={showAlert}></ProductPage>}
+          ></Route>
+          <Route
+            exact
+            path="/cart"
+            element={<Cart showAlert={showAlert}></Cart>}
+          ></Route>
+          <Route
+            exact
+            path="/checkout"
+            element={<CheckOut showAlert={showAlert}></CheckOut>}
+          ></Route>
+          <Route
+            exact
+            path="/order"
+            element={<Order showAlert={showAlert}></Order>}
+          ></Route>
+          <Route
+            exact
+            path="/manageorders"
+            element={<ManageOrders showAlert={showAlert}></ManageOrders>}
+          ></Route>
+          <Route
+            exact
+            path="/adminDashboard"
+            element={<AdminDashboard showAlert={showAlert}></AdminDashboard>}
+          ></Route>
+          <Route
+            exact
+            path="/manageProducts"
+            element={<ManageProducts showAlert={showAlert}></ManageProducts>}
+          ></Route>
+          <Route
+            exact
+            path="/manageUsersAdmin"
+            element={<ManageUsers showAlert={showAlert}></ManageUsers>}
+          ></Route>
+          <Route
+            exact
+            path="/manageOrdersAdmin"
+            element={
+              <ManageOrdersAdmin showAlert={showAlert}></ManageOrdersAdmin>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/createProduct"
+            element={<CreateProduct showAlert={showAlert}></CreateProduct>}
+          >
+            <Route
+              path=":productId"
+              element={<AddProductImage showAlert={showAlert} />}
+            ></Route>
           </Route>
           <Route
             exact
@@ -69,8 +127,7 @@ export default function Home() {
           <Route exact path="/about" element={<AboutUs></AboutUs>}></Route>
           <Route exact path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
-        </AuthState>
-
-      </Router>
+      </AuthState>
+    </Router>
   );
 }

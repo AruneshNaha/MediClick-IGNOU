@@ -28,7 +28,6 @@ const AuthState = (props) => {
 
     setTotalPrice(totalPrice + cartItem.totalPrice);
     setCart(arr);
-    console.log(`cart array from authstate: ${cart}`);
   };
 
   const updateTotalPrice = (cart) => {
@@ -53,8 +52,6 @@ const AuthState = (props) => {
     setCart([]);
     setTotalPrice(0);
   };
-
-  console.log(cart);
 
   useEffect(() => {
     setCart(cart);

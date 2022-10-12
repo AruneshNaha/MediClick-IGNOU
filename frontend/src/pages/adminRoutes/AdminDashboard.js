@@ -60,15 +60,13 @@ export default function AdminDashboard() {
             </button>
           </li>
           <li>
-            <button className="btn btn-link" onClick={() => {
+            <button
+              className="btn btn-link"
+              onClick={() => {
                 navigate('/manageUsersAdmin');
-              }}>
+              }}
+            >
               <PeopleIcon></PeopleIcon> Manage users
-            </button>
-          </li>
-          <li>
-            <button className="btn btn-link">
-              Total sales value till date
             </button>
           </li>
         </ul>
