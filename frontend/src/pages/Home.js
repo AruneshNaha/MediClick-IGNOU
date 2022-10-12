@@ -32,7 +32,7 @@ export default function Home() {
     if(type === 'success'){
       toast.success(message, 
         {
-          position: "top-center",
+          position: "top-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -45,7 +45,7 @@ export default function Home() {
     }else if(type === 'danger'){
       toast.error(message, 
         {
-          position: "top-center",
+          position: "top-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -58,7 +58,7 @@ export default function Home() {
     }else{
       toast.info(message, 
         {
-          position: "top-center",
+          position: "top-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
