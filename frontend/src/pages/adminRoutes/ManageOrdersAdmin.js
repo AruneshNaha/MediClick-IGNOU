@@ -79,6 +79,7 @@ export default function ManageOrdersAdmin(props) {
               order={order}
               index={index}
               deleteOrder={deleteOrder}
+              showAlert={props.showAlert}
             ></OrderAdminCard>
           );
         })}

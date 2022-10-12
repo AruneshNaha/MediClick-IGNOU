@@ -79,7 +79,7 @@ export default function ProductCard(props) {
 
                   props.createCartArray(cart);
                   setProductAdded(1);
-                  props.showAlert('Product added to cart', 'success');
+                  props.showAlert(`${e} ${props.product.name} added to cart`, 'success');
                 } else {
                   cart.forEach((cartItem) => {
                     if (cartItem.productId === props.product._id) {
@@ -112,7 +112,7 @@ export default function ProductCard(props) {
                 onClick={() => {
                   removeFromCart(props.product._id);
                   setProductAdded(0);
-                  props.showAlert('Product removed from cart', 'danger');
+                  props.showAlert(`${props.product.name} removed from cart`, 'danger');
                   props.createCartArray(cart);
                 }}
               >

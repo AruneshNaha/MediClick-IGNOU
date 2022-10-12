@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function CreateProduct(props) {
   const [product, setProduct] = useState({
@@ -25,6 +25,18 @@ export default function CreateProduct(props) {
   };
 
   const createProduct = async () => {
+
+    if (
+      !product.name ||
+      !product.price ||
+      !product.stock ||
+      !product.category ||
+      !product.description
+    ) {
+      props.showAlert('You cannot leave any field empty', 'danger');
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (token !== null) {
       try {

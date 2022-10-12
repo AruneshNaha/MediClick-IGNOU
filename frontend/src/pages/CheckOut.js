@@ -38,6 +38,17 @@ export default function CheckOut(props) {
   const navigate = useNavigate();
 
   const createOrder = async () => {
+    if (
+      !shippingInfo.address ||
+      !shippingInfo.city ||
+      !shippingInfo.phoneNo ||
+      !shippingInfo.pinCode ||
+      !shippingInfo.state
+    ) {
+      props.showAlert('You cannot leave any field empty', 'danger');
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (token !== null) {
       try {
@@ -54,16 +65,16 @@ export default function CheckOut(props) {
         if (response.status === 201) {
           // localStorage.setItem('token', auth.token);
           navigate('/order', { state: res });
-          props.showAlert('Order created successfully!', 'success');
+          props.showAlert('Order placed successfully!', 'success');
         } else {
-          props.showAlert('Failed to create order', 'danger');
+          props.showAlert('Failed to place order', 'danger');
         }
         console.log(res);
       } catch (error) {
         console.log(error);
       }
-    }else{
-      props.showAlert("Please login first", 'danger')
+    } else {
+      props.showAlert('Please login first', 'danger');
     }
   };
 

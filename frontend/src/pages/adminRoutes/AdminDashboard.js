@@ -16,7 +16,7 @@ export default function AdminDashboard() {
       >
         <center>
           <h1>
-            <span class="badge bg-danger">Admin Dashboard</span>
+            <span className="badge bg-danger">Admin Dashboard</span>
           </h1>
         </center>
       </div>

@@ -1,5 +1,6 @@
 import CurrencyRupee from '@mui/icons-material/CurrencyRupee';
 import React, { useEffect, useState } from 'react';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export default function OrderAdminCard(props) {
   const localhost = 'http://localhost:4000';
@@ -153,7 +154,7 @@ export default function OrderAdminCard(props) {
               updateOrderStatus(props.order._id);
             }}
           >
-            Update order status to delivered
+            <LocalShippingIcon></LocalShippingIcon> Update order status to delivered
           </button>
         ) : (
           <div className="d-flex justify-content-between">

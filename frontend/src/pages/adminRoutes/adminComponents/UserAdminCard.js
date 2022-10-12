@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PersonIcon from '@mui/icons-material/Person';
+import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 
 export default function UserAdminCard(props) {
   const localhost = 'http://localhost:4000';
@@ -39,6 +42,7 @@ export default function UserAdminCard(props) {
             <h4 className="fw-semibold">User Info</h4>
             <h4>
               Role:{' '}
+              {userRole === 'admin' ? <AdminPanelSettingsIcon></AdminPanelSettingsIcon> : <PersonIcon></PersonIcon>}
               <span
                 className={
                   userRole === 'admin' ? `badge bg-danger` : `badge bg-success`
@@ -61,7 +65,7 @@ export default function UserAdminCard(props) {
                   updateUserRole(props.user._id);
                 }}
               >
-                Set user to admin
+                Set user to admin <AdminPanelSettingsIcon></AdminPanelSettingsIcon>
               </button>
             ) : (
               ''
@@ -73,6 +77,7 @@ export default function UserAdminCard(props) {
               }}
             >
               Delete this user
+              <PersonRemoveAlt1Icon></PersonRemoveAlt1Icon>
             </button>
           </div>
         </div>
