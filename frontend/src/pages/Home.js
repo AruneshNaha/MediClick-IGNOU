@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../components/Navbar';
-import FireAlert from '../components/Alert';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AboutUs from './AboutUs';
 import Dashboard from './Dashboard';
@@ -23,24 +22,74 @@ import ManageProducts from './adminRoutes/ManageProducts';
 import ManageOrdersAdmin from './adminRoutes/ManageOrdersAdmin';
 import ManageUsers from './adminRoutes/ManageUsers';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Home() {
   const [alert, setAlert] = useState('');
 
   const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type,
-    });
-    setTimeout(() => {
-      setAlert(null);
-    }, 3000);
+    if(type === 'success'){
+      toast.success(message, 
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+      }
+      );
+    }else if(type === 'danger'){
+      toast.error(message, 
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+      }
+      );
+    }else{
+      toast.info(message, 
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+      }
+      );
+    } 
   };
 
   return (
     <Router>
       <AuthState>
+        <ToastContainer
+          // position="top-right"
+          // autoClose={5000}
+          // hideProgressBar={false}
+          // newestOnTop={false}
+          // closeOnClick
+          // rtl={false}
+          // pauseOnFocusLoss
+          // draggable
+          // pauseOnHover
+          // theme="light"
+        />
+        {/* Same as */}
+        <ToastContainer />
         <Navbar showAlert={showAlert}></Navbar>
-        <FireAlert alert={alert}></FireAlert>
+        {/* <FireAlert alert={alert}></FireAlert> */}
         <Routes>
           <Route
             exact

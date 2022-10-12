@@ -57,7 +57,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             MediClick
@@ -126,6 +126,7 @@ export default function Navbar(props) {
                           'You are successfully logged out!',
                           'success'
                         );
+                        navigate('/signin')
                       } catch (error) {
                         console.log(error);
                       }
