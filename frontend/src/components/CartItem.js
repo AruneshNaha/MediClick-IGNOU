@@ -69,6 +69,7 @@ export default function CartItem(props) {
           className="btn btn-danger"
           onClick={() => {
             removeFromCart(props.cartItem.productId);
+            props.showAlert(`${props.cartItem.name} removed from cart`)
           }}
         >
           Remove

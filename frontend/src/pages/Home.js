@@ -171,7 +171,7 @@ export default function Home() {
           <Route
             exact
             path="/forgotpassword"
-            element={<ForgotPassword></ForgotPassword>}
+            element={<ForgotPassword showAlert={showAlert}></ForgotPassword>}
           ></Route>
           <Route exact path="/about" element={<AboutUs></AboutUs>}></Route>
           <Route exact path="*" element={<NotFound></NotFound>}></Route>

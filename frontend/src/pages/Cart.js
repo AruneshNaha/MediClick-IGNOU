@@ -5,8 +5,6 @@ import AuthContext from './context/AuthContext';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 export default function Cart(props) {
-  // const location = useLocation();
-  // console.log(location.state)
 
   const context = useContext(AuthContext);
   const { cart, totalPrice } = context;
@@ -44,7 +42,7 @@ export default function Cart(props) {
                 navigate('/checkout', { state: finalPrice });
               }}
             >
-              {`Proceed to checkout`}{'\t\t'}
+              {`Proceed to checkout`}
               <ShoppingCartCheckoutIcon></ShoppingCartCheckoutIcon>
             </button>
           </center>
@@ -58,7 +56,7 @@ export default function Cart(props) {
       ) : (
         cart.map((cartItem) => {
           return (
-            <CartItem key={cartItem.productId} cartItem={cartItem}></CartItem>
+            <CartItem key={cartItem.productId} cartItem={cartItem} showAlert={props.showAlert}></CartItem>
           );
         })
       )}

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from '../components/ProductCard';
+import AuthContext from './context/AuthContext';
+import RemoveShoppingCart from '@mui/icons-material/RemoveShoppingCart';
 
 export default function Products(props) {
   const getProducts = async () => {
@@ -17,8 +19,11 @@ export default function Products(props) {
   const [products, setproducts] = useState([]);
   const [error, seterror] = useState(false);
   const [cart, setCart] = useState([]);
-  const navigate = useNavigate()
-  const {cartArray} = useParams()
+  const navigate = useNavigate();
+  const { cartArray } = useParams();
+
+  const context = useContext(AuthContext);
+  const { emptyCart } = context;
 
   const loadallproducts = () => {
     getProducts().then((data) => {
@@ -45,7 +50,7 @@ export default function Products(props) {
 
   return (
     <>
-    <div
+      <div
         className="position-relative"
         style={{ margin: '30px 0px', marginTop: '10px' }}
       >
@@ -53,23 +58,40 @@ export default function Products(props) {
           <h1>Welcome to MediClick</h1>
         </center>
       </div>
-    <div className="d-grip gap-2">
-    <center><button className="btn btn-primary" type="button" onClick={() => {
-      navigate('/cart')
-    }}>Go to cart <ShoppingCartIcon></ShoppingCartIcon> </button></center>
-    </div>
+      <div className="container m-5 d-flex justify-content-evenly">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => {
+            navigate('/cart');
+          }}
+        >
+          Go to cart <ShoppingCartIcon></ShoppingCartIcon>{' '}
+        </button>
+        <button
+          className="btn btn-warning"
+          onClick={() => {
+            emptyCart();
+            props.showAlert('All items deleted from cart');
+          }}
+        >
+          Empty Cart <RemoveShoppingCart></RemoveShoppingCart>
+        </button>
+      </div>
       <div className="container m-5">
         <div className="row m-3">
-          { products.length !==0 ? products.map((product) => {
-            return (
-              <ProductCard
-                key={product._id}
-                product={product}
-                showAlert={props.showAlert}
-                createCartArray={createCartArray}
-              ></ProductCard>
-            );
-          }): "No products to view"}
+          {products.length !== 0
+            ? products.map((product) => {
+                return (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    showAlert={props.showAlert}
+                    createCartArray={createCartArray}
+                  ></ProductCard>
+                );
+              })
+            : 'No products to view'}
         </div>
       </div>
     </>

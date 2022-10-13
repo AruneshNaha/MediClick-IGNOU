@@ -136,13 +136,12 @@ export default function Navbar(props) {
                   </Link>
                 </li>
               )}
-              {/* {token !== null && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/forgotpassowrd">
+                  <Link className="nav-link" to="/forgotpassword">
                     Forgot Password
                   </Link>
                 </li>
-              )} */}
+              
 
               <li className="nav-item">
                 <Link className="nav-link" to="/about">

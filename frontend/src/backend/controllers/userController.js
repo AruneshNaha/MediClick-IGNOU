@@ -100,7 +100,7 @@ exports.forgotPassword = async (req, res, next) => {
     'host'
   )}/api/v1/password/reset/${resetToken}`;
 
-  const message = `Your password reset url is:- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then please ignore it.Please click on the link within 10 minutes after which it will expire`;
+  const message = `Your password reset code is:- \n\n ${resetToken} \n\n If you have not requested this email then please ignore it.Please click on the link within 10 minutes after which it will expire`;
 
   try {
     await sendEmail({

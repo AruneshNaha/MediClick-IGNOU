@@ -2,6 +2,8 @@ import React from 'react';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
 
 function SignIn(props) {
   const [credentials, setCredentials] = useState({
@@ -63,6 +65,7 @@ function SignIn(props) {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
+            <EmailIcon></EmailIcon>
             <input
               type="email"
               className="form-control"
@@ -76,6 +79,7 @@ function SignIn(props) {
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputPassword1">Password</label>
+            <PasswordIcon></PasswordIcon>
             <input
               type="password"
               name="password"
