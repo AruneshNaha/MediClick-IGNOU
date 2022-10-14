@@ -9,6 +9,12 @@ export default function ChangePassword(props) {
 
   const host = "http://localhost:4000"
 
+  const handleChange = (e) => {
+    setPass({ ...pass, [e.target.name]: e.target.value });
+
+    console.log(pass);
+  };
+
   const changePassword = async() => {
     console.log(pass)
     if (
@@ -53,7 +59,7 @@ export default function ChangePassword(props) {
       style={{ margin: '35px 0px', marginTop: '100px' }}
     >
       <center>
-        <h1>Forgot Password</h1>
+        <h1>Change Password</h1>
       </center>
       <div className="container mt-3">
         <center>
@@ -62,26 +68,22 @@ export default function ChangePassword(props) {
         Password:
         <input
           type="password"
-          name="password"
+          name="oldPassword"
           className="form-control"
           id="exampleInputPassword1"
           placeholder="Old Password"
           value={pass.oldPassword}
-          onChange={(e) => {
-            setPass({oldPassword: e.target.value})
-          }}
+          onChange={handleChange}
         />
         Confirm Password:
         <input
           type="password"
-          name="confirmPassword"
+          name="newPassword"
           className="form-control"
           id="exampleInputPassword2"
           placeholder="New Password"
           value={pass.newPassword}
-          onChange={(e) => {
-            setPass({newPassword: e.target.value})
-          }}
+          onChange={handleChange}
         />
         <button className="btn btn-primary" onClick={changePassword}>
           Reset Password
