@@ -21,8 +21,8 @@ export default function ChangePassword(props) {
       return;
     } else if (pass.oldPassword === pass.newPassword) {
       props.showAlert('Old password cannot be the new password');
-      setPass({ oldPassword: '', newPassword: '' })
-      return
+      setPass({ oldPassword: '', newPassword: '' });
+      return;
     }
 
     const token = localStorage.getItem('token');
@@ -58,33 +58,37 @@ export default function ChangePassword(props) {
       <center>
         <h1>Change Password</h1>
       </center>
-      <div className="container mt-3">
-        <center>
-          <h4>Set your password:</h4>
-        </center>
-        Password:
-        <input
-          type="password"
-          name="oldPassword"
-          className="form-control"
-          id="exampleInputPassword1"
-          placeholder="Old Password"
-          value={pass.oldPassword}
-          onChange={handleChange}
-        />
-        Confirm Password:
-        <input
-          type="password"
-          name="newPassword"
-          className="form-control"
-          id="exampleInputPassword2"
-          placeholder="New Password"
-          value={pass.newPassword}
-          onChange={handleChange}
-        />
-        <button className="btn btn-primary" onClick={changePassword}>
-          Reset Password
-        </button>
+      <div className="container d-flex justify-content-center">
+        <div className="card mt-5 p-3" style={{ width: '30rem' }}>
+          <center>
+            <h4>Set your password:</h4>
+          </center>
+          Password:
+          <input
+            autoComplete="off"
+            type="password"
+            name="oldPassword"
+            className="form-control"
+            id="exampleInputPassword1"
+            placeholder="Old Password"
+            value={pass.oldPassword}
+            onChange={handleChange}
+          />
+          Confirm Password:
+          <input
+            autoComplete="off"
+            type="password"
+            name="newPassword"
+            className="form-control"
+            id="exampleInputPassword2"
+            placeholder="New Password"
+            value={pass.newPassword}
+            onChange={handleChange}
+          />
+          <button className="btn btn-primary m-3" onClick={changePassword}>
+            Change Password
+          </button>
+        </div>
       </div>
     </div>
   );

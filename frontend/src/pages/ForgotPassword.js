@@ -88,95 +88,97 @@ function ForgotPassword(props) {
   return (
     <div
       className="position-relative"
-      style={{ margin: '35px 0px', marginTop: '100px' }}
+      style={{ margin: '35px 0px', marginTop: '50px' }}
     >
-      <div className="position-absolute top-0 start-50 translate-middle">
+      <center>
         <h1>Forgot Password</h1>
-      </div>
+      </center>
 
       {loading ? (
-        <div className="container ">
+        <div className="container d-flex justify-content-center">
           <h5>Please wait while we send you a code...</h5>
         </div>
       ) : (
         ''
       )}
 
-      {mailSent ? (
-        <div className="container my-3">
-          <br />
-          <br />
-          <center>
-            <h4 className="mt-3">
-              Enter the password reset code from your email:
-            </h4>
-          </center>
-          <TextField
-            fullWidth
-            sx={{ mt: 1 }}
-            required
-            name="code"
-            id="outlined-required"
-            label="Code"
-            defaultValue=""
-            onChange={(e) => {
-              setCode(e.target.value);
-              console.log(code);
-            }}
-          />
-          <center>
-            <h4>Set your password:</h4>
-          </center>
-          Password:
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-            value={pass.password}
-            onChange={onChange}
-          />
-          Confirm Password:
-          <input
-            type="password"
-            name="confirmPassword"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-            value={pass.confirmPassword}
-            onChange={onChange}
-          />
-          <button className="btn btn-primary" onClick={resetPassword}>
-            Reset Password
-          </button>
-        </div>
-      ) : (
-        <div className="my-3 p-5">
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
+      <div className="container d-flex justify-content-center">
+        {mailSent ? (
+          <div className="card mt-5 p-5" style={{ width: '30rem' }}F>
+            <br />
+            <br />
+            <center>
+              <h4>
+                Enter the password reset code from your email:
+              </h4>
+            </center>
+            <TextField
+              fullWidth
+              sx={{ mt: 1 }}
+              required
+              name="code"
+              id="outlined-required"
+              label="Code"
+              defaultValue=""
               onChange={(e) => {
-                setEmail(e.target.value);
+                setCode(e.target.value);
+                console.log(code);
               }}
             />
+            <center>
+              <h4>Set your password:</h4>
+            </center>
+            Password:
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+              value={pass.password}
+              onChange={onChange}
+            />
+            Confirm Password:
+            <input
+              type="password"
+              name="confirmPassword"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+              value={pass.confirmPassword}
+              onChange={onChange}
+            />
+            <button className="btn btn-primary m-3" onClick={resetPassword}>
+              Reset Password
+            </button>
           </div>
+        ) : (
+          <div className="card mt-5 p-5" style={{ width: '30rem' }}>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
 
-          <button
-            type="submit m-3"
-            className="btn btn-primary"
-            onClick={sendEmail}
-          >
-            Send me a code
-          </button>
-        </div>
-      )}
+            <button
+              type="submit"
+              className="btn btn-primary m-3"
+              onClick={sendEmail}
+            >
+              Send me a code
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
