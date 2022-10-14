@@ -57,11 +57,12 @@ function SignIn(props) {
       className="position-relative"
       style={{ margin: '35px 0px', marginTop: '100px' }}
     >
-      <div className="position-absolute top-0 start-50 translate-middle">
+      <center>
         <h1>Sign in to Mediclick</h1>
-      </div>
+      </center>
 
-      <div className="my-3 p-5">
+      <div className="container d-flex justify-content-center">
+        <div className="card mt-5 p-3" style={{ width: '30rem' }}>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
@@ -91,10 +92,11 @@ function SignIn(props) {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <div className="d-flex justify-content-center"><button type="submit" className="btn btn-primary m-3">
             Submit
-          </button>
+          </button></div>
         </form>
+        </div>
       </div>
     </div>
   );
