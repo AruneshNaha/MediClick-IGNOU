@@ -24,6 +24,7 @@ import ManageUsers from './adminRoutes/ManageUsers';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChangePassword from './ChangePassword';
 
 export default function Home() {
   const [alert, setAlert] = useState('');
@@ -135,6 +136,11 @@ export default function Home() {
             exact
             path="/manageorders"
             element={<ManageOrders showAlert={showAlert}></ManageOrders>}
+          ></Route>
+          <Route
+            exact
+            path="/changepassword"
+            element={<ChangePassword showAlert={showAlert}></ChangePassword>}
           ></Route>
           <Route
             exact
