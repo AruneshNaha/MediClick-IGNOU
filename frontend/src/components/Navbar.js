@@ -12,7 +12,7 @@ export default function Navbar(props) {
   const context = useContext(AuthContext);
   const { userIsAdmin, adminPrivilege, removeAdminPrivilege, authToken } =
     context;
-    const storageValue = localStorage.getItem('role')
+  const storageValue = localStorage.getItem('role');
 
   // console.log(userIsAdmin, authToken);
 
@@ -81,7 +81,11 @@ export default function Navbar(props) {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/manageorders">
+                <a
+                  className="nav-link"
+                  aria-current="page"
+                  href="/manageorders"
+                >
                   Manage Orders
                 </a>
               </li>
@@ -126,7 +130,7 @@ export default function Navbar(props) {
                           'You are successfully logged out!',
                           'success'
                         );
-                        navigate('/signin')
+                        navigate('/signin');
                       } catch (error) {
                         console.log(error);
                       }
@@ -136,12 +140,39 @@ export default function Navbar(props) {
                   </Link>
                 </li>
               )}
+
+              {token !== null && (
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to="/"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Account Management
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/forgotpassword">
+                        Forgot Password
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/changepassword">
+                        Reset Password
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              )}
+              {token === null && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/forgotpassword">
                     Forgot Password
                   </Link>
                 </li>
-              
+              )}
 
               <li className="nav-item">
                 <Link className="nav-link" to="/about">
