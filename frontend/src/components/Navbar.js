@@ -199,7 +199,7 @@ export default function Navbar(props) {
                 onClick={() => {
                   if (value === null || value === '') {
                     props.showAlert(
-                      'Please enter a value in searchbar',
+                      'Please enter a valid product name in searchbar',
                       'danger'
                     );
                   } else {

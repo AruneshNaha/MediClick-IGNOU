@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChangePassword(props) {
-
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [pass, setPass] = useState({ oldPassword: '', newPassword: '' });
 
-  const host = "http://localhost:4000"
+  const host = 'http://localhost:4000';
 
   const handleChange = (e) => {
     setPass({ ...pass, [e.target.name]: e.target.value });
@@ -15,43 +14,41 @@ export default function ChangePassword(props) {
     console.log(pass);
   };
 
-  const changePassword = async() => {
-    console.log(pass)
-    if (
-        pass.oldPassword === "" ||
-        pass.newPassword === ""
-      ) {
-        props.showAlert(
-          'You cannot leave any field empty',
-          'danger'
-        );
-        return;
+  const changePassword = async () => {
+    console.log(pass);
+    if (pass.oldPassword === '' || pass.newPassword === '') {
+      props.showAlert('You cannot leave any field empty', 'danger');
+      return;
+    } else if (pass.oldPassword === pass.newPassword) {
+      props.showAlert('Old password cannot be the new password');
+      setPass({ oldPassword: '', newPassword: '' })
+      return
+    }
+
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await fetch(`${host}/api/v1/updateUserPassword`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token,
+        },
+        body: JSON.stringify(pass),
+      });
+
+      const res = await response.json();
+      if (response.status === 200) {
+        navigate(`/`);
+        props.showAlert('Password was changed successfully!', 'success');
+      } else {
+        props.showAlert(res.error, 'danger');
       }
-  
-      const token = localStorage.getItem('token');
-  
-      try {
-        const response = await fetch(`${host}/api/v1/updateUserPassword`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            token: token,
-          },
-          body: JSON.stringify(pass),
-        });
-  
-        const res = await response.json();
-        if (response.status === 200) {
-          navigate(`/`);
-          props.showAlert('Password was changed successfully!', 'success');
-        } else {
-          props.showAlert(res.error, 'danger');
-        }
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-  }
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div

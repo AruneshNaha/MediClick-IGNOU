@@ -35,7 +35,7 @@ function ForgotPassword(props) {
         props.showAlert('Code has been sent successfully!', 'success');
       } else {
         setLoading(false);
-        props.showAlert('Failed to send a code', 'danger');
+        props.showAlert(`Failed to send a code: ${res.error}`, 'danger');
       }
       console.log(res);
     } catch (error) {
@@ -99,7 +99,7 @@ function ForgotPassword(props) {
           <h5>Please wait while we send you a code...</h5>
         </div>
       ) : (
-        'Please check the password reset code in your email'
+        ''
       )}
 
       {mailSent ? (
