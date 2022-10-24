@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AboutUs from './AboutUs';
 import Dashboard from './Dashboard';
 import SignIn from './SignIn';
@@ -10,7 +10,6 @@ import Products from './Products';
 import ForgotPassword from './ForgotPassword';
 import AuthState from './context/AuthState';
 import Cart from './Cart';
-import AuthContext from './context/AuthContext';
 import CheckOut from './CheckOut';
 import Order from './Order';
 import ManageOrders from './ManageOrders';
@@ -27,13 +26,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import ChangePassword from './ChangePassword';
 
 export default function Home() {
-  const [alert, setAlert] = useState('');
 
   const showAlert = (message, type) => {
     if(type === 'success'){
       toast.success(message, 
         {
-          position: "top-left",
+          position: "bottom-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -46,7 +44,7 @@ export default function Home() {
     }else if(type === 'danger'){
       toast.error(message, 
         {
-          position: "top-left",
+          position: "botton-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -59,7 +57,7 @@ export default function Home() {
     }else{
       toast.info(message, 
         {
-          position: "top-left",
+          position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -75,22 +73,10 @@ export default function Home() {
   return (
     <Router>
       <AuthState>
-        <ToastContainer
-          // position="top-right"
-          // autoClose={5000}
-          // hideProgressBar={false}
-          // newestOnTop={false}
-          // closeOnClick
-          // rtl={false}
-          // pauseOnFocusLoss
-          // draggable
-          // pauseOnHover
-          // theme="light"
-        />
+        <ToastContainer  />
         {/* Same as */}
         <ToastContainer />
         <Navbar showAlert={showAlert}></Navbar>
-        {/* <FireAlert alert={alert}></FireAlert> */}
         <Routes>
           <Route
             exact

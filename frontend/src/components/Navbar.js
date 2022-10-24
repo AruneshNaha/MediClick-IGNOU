@@ -4,6 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AuthContext from '../pages/context/AuthContext';
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function Navbar(props) {
   const token = localStorage.getItem('token');
@@ -81,14 +82,11 @@ export default function Navbar(props) {
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className="nav-link"
-                  aria-current="page"
-                  href="/manageorders"
-                >
-                  Manage Orders
-                </a>
+                <Link className="nav-link" aria-current="page" to="/products">
+                  View Products
+                </Link>
               </li>
+
               {userIsAdmin === true || storageValue === 'admin' ? (
                 <li className="nav-item">
                   <Link className="nav-link" to="/adminDashboard">
@@ -112,34 +110,12 @@ export default function Navbar(props) {
                   </Link>
                 </li>
               )}
-              {token !== null && (
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    role="button"
-                    onClick={async () => {
-                      // console.log(token);
-                      try {
-                        await fetch(`${host}/api/v1/logout`, {
-                          method: 'GET',
-                        });
-                        localStorage.clear();
-                        removeAdminPrivilege();
 
-                        props.showAlert(
-                          'You are successfully logged out!',
-                          'success'
-                        );
-                        navigate('/signin');
-                      } catch (error) {
-                        console.log(error);
-                      }
-                    }}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              )}
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">
+                  About us
+                </Link>
+              </li>
 
               {token !== null && (
                 <li className="nav-item dropdown">
@@ -150,9 +126,19 @@ export default function Navbar(props) {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Account Management
+                    <PersonIcon></PersonIcon>
                   </Link>
                   <ul className="dropdown-menu">
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        aria-current="page"
+                        to="/manageorders"
+                      >
+                        Manage Orders
+                      </Link>
+                    </li>
+                    <hr />
                     <li>
                       <Link className="dropdown-item" to="/forgotpassword">
                         Forgot Password
@@ -161,6 +147,33 @@ export default function Navbar(props) {
                     <li>
                       <Link className="dropdown-item" to="/changepassword">
                         Reset Password
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        role="button"
+                        onClick={async () => {
+                          // console.log(token);
+                          try {
+                            await fetch(`${host}/api/v1/logout`, {
+                              method: 'GET',
+                            });
+                            localStorage.clear();
+                            removeAdminPrivilege();
+
+                            props.showAlert(
+                              'You are successfully logged out!',
+                              'success'
+                            );
+                            navigate('/signin');
+                          } catch (error) {
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        Logout
                       </Link>
                     </li>
                   </ul>
@@ -173,16 +186,10 @@ export default function Navbar(props) {
                   </Link>
                 </li>
               )}
-
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">
-                  About us
-                </Link>
-              </li>
             </ul>
             <div className="d-flex">
               <Autocomplete
-              autoComplete='off'
+                autoComplete="off"
                 disablePortal
                 id="combo-box-demo"
                 options={productArray}

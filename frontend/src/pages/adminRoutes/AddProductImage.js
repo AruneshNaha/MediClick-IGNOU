@@ -31,37 +31,37 @@ export default function AddProductImage(props) {
                 console.log(key[0] + ': ' + key[1]);
               }
 
-              const token = localStorage.getItem('token');
-              if (token !== null) {
-                try {
-                  const response = await fetch(`${host}/api/v1/upload`, {
-                    method: 'POST',
-                    body: formdata,
-                  });
+              // const token = localStorage.getItem('token');
+              // if (token !== null) {
+              //   try {
+              //     const response = await fetch(`${host}/api/v1/upload`, {
+              //       method: 'POST',
+              //       body: formdata,
+              //     });
 
-                  const res = response;
-                  if (response.status === 200) {
-                    console.log(
-                      `Message from upload product image: ${res.message}`
-                    );
-                    props.showAlert(
-                      'Product image uploaded successfully!',
-                      'success'
-                    );
-                    navigate('/adminDashboard');
-                  } else {
-                    console.log(
-                      `Message from upload product image: ${res.message}`
-                    );
-                    props.showAlert('Failed to create product', 'danger');
-                  }
-                  console.log(res);
-                } catch (error) {
-                  console.log(error);
-                }
-              } else {
-                props.showAlert('Please login as admin first', 'danger');
-              }
+              //     const res = response;
+              //     if (response.status === 200) {
+              //       console.log(
+              //         `Message from upload product image: ${res.message}`
+              //       );
+              //       props.showAlert(
+              //         'Product image uploaded successfully!',
+              //         'success'
+              //       );
+              //       navigate('/adminDashboard');
+              //     } else {
+              //       console.log(
+              //         `Message from upload product image: ${res.message}`
+              //       );
+              //       props.showAlert('Failed to create product', 'danger');
+              //     }
+              //     console.log(res);
+              //   } catch (error) {
+              //     console.log(error);
+              //   }
+              // } else {
+              //   props.showAlert('Please login as admin first', 'danger');
+              // }
             }}
           />
         </Button>
@@ -69,39 +69,39 @@ export default function AddProductImage(props) {
       <center>
         <button
           className="btn btn-primary m-3"
-          // onClick={async () => {
-          //   const token = localStorage.getItem('token');
-          //   if (token !== null) {
-          //     try {
-          //       const response = await fetch(`${host}/api/v1/upload`, {
-          //         method: 'POST',
-          //         body: formdata,
-          //       });
+          onClick={async () => {
+            const token = localStorage.getItem('token');
+            if (token !== null) {
+              try {
+                const response = await fetch(`${host}/api/v1/upload`, {
+                  method: 'POST',
+                  body: formdata,
+                });
 
-          //       const res = response;
-          //       if (response.status === 200) {
-          //         console.log(
-          //           `Message from upload product image: ${res.message}`
-          //         );
-          //         props.showAlert(
-          //           'Product image uploaded successfully!',
-          //           'success'
-          //         );
-          //         navigate('/adminDashboard');
-          //       } else {
-          //         console.log(
-          //           `Message from upload product image: ${res.message}`
-          //         );
-          //         props.showAlert('Failed to create product', 'danger');
-          //       }
-          //       console.log(res);
-          //     } catch (error) {
-          //       console.log(error);
-          //     }
-          //   } else {
-          //     props.showAlert('Please login as admin first', 'danger');
-          //   }
-          // }}
+                const res = response;
+                if (response.status === 200) {
+                  console.log(
+                    `Message from upload product image: ${res.message}`
+                  );
+                  props.showAlert(
+                    'Product image uploaded successfully!',
+                    'success'
+                  );
+                  navigate('/adminDashboard');
+                } else {
+                  console.log(
+                    `Message from upload product image: ${res.message}`
+                  );
+                  props.showAlert('Failed to create product', 'danger');
+                }
+                console.log(res);
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              props.showAlert('Please login as admin first', 'danger');
+            }
+          }}
         >
           Upload this image
         </button>
