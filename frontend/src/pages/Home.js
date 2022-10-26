@@ -31,7 +31,7 @@ export default function Home() {
     if(type === 'success'){
       toast.success(message, 
         {
-          position: "bottom-right",
+          position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -44,7 +44,7 @@ export default function Home() {
     }else if(type === 'danger'){
       toast.error(message, 
         {
-          position: "botton-left",
+          position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,

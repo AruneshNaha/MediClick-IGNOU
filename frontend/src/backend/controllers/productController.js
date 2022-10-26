@@ -1,5 +1,8 @@
 const Product = require('../models/productModel');
 const Apifeatures = require('../utils/apiFeatures');
+const _ = require('lodash');
+const { sortedIndexBy, sortBy } = require('lodash');
+
 const ErrorHandler = require('../utils/errorHandler');
 
 const path = require('path');
@@ -7,11 +10,11 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname,'../uploads'));
+    cb(null, path.join(__dirname, '../uploads'));
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = path.extname(file.originalname);
-    cb(null, req.body.id  + uniqueSuffix);
+    cb(null, req.body.id + uniqueSuffix);
   },
 });
 
@@ -105,7 +108,7 @@ exports.getAllProducts = async (req, res) => {
   //   .filter()
   //   .pagination(resultPerPage);
 
-  const products = await Product.find()
+  const products = await Product.find().sort({'name': 1});
   res.status(200).json({
     success: true,
     products,
@@ -132,7 +135,8 @@ exports.createProductReview = async (req, res, next) => {
   if (isReviewed) {
     product.reviews.forEach((rev) => {
       if (rev.user.toString() === req.user._id.toString()) {
-        (rev.rating = rating); (rev.comment = comment);
+        rev.rating = rating;
+        rev.comment = comment;
       }
     });
   } else {
