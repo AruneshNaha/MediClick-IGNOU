@@ -22,8 +22,9 @@ const productSchema = new mongoose.Schema({
     default: 'http://learncodeonline.in/manicon.png',
   },
   category: {
-    type: String,
-    required: [true, 'Please enter product category'],
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category',
+    required: true,
   },
   stock: {
     type: Number,

@@ -56,7 +56,7 @@ export default function ProductCard(props) {
             </span>
           </h5>
           <h6>
-            <i>{props.product.category}</i>
+            <i>{props.product.category.name}</i>
           </h6>
           <div className="d-flex justify-content-between">
             <DropdownButton

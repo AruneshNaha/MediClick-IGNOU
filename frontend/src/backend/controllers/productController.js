@@ -108,7 +108,7 @@ exports.getAllProducts = async (req, res) => {
   //   .filter()
   //   .pagination(resultPerPage);
 
-  const products = await Product.find().sort({'name': 1});
+  const products = await Product.find().sort({'name': 1}).populate('category');
   res.status(200).json({
     success: true,
     products,
