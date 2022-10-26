@@ -9,22 +9,6 @@ export default function OrderAdminCard(props) {
   const [user, setUser] = useState({});
   const [orderStatus, setOrderStatus] = useState(props.order.orderStatus);
 
-  const getUserInfo = async (userId) => {
-    if (token && role === 'admin') {
-      await fetch(`${localhost}/api/v1/getUserById/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          token: token,
-        },
-      }).then(async (response) => {
-        const res = await response.json();
-        await setUser(res.users);
-      });
-    } else {
-      props.showAlert('You are not an admin');
-    }
-  };
 
   const updateOrderStatus = async (orderId) => {
     if (token && role === 'admin') {
@@ -48,7 +32,6 @@ export default function OrderAdminCard(props) {
   };
 
   useEffect(() => {
-    getUserInfo(props.order.user);
   }, []);
 
   return (
@@ -73,11 +56,11 @@ export default function OrderAdminCard(props) {
           </span>
         </h4>
       </div>
-      <p>
-        ID: {user._id} <br />
-        Name: {user.name} <br />
-        Email: {user.email}
-      </p>
+      {props.order.user ? <p>
+        ID: {props.order.user._id} <br />
+        Name: {props.order.user.name} <br />
+        Email: {props.order.user.email}
+      </p> : "User does not exist"}
 
       <div className="accordion accordion-flush" id="accordionFlushExample">
         <div className="accordion-item">
