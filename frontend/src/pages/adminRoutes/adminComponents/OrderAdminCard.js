@@ -1,12 +1,11 @@
 import CurrencyRupee from '@mui/icons-material/CurrencyRupee';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export default function OrderAdminCard(props) {
   const localhost = 'http://localhost:4000';
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
-  const [user, setUser] = useState({});
   const [orderStatus, setOrderStatus] = useState(props.order.orderStatus);
 
 
@@ -31,8 +30,7 @@ export default function OrderAdminCard(props) {
     }
   };
 
-  useEffect(() => {
-  }, []);
+
 
   return (
     <div className="card p-3 m-5">
@@ -89,7 +87,7 @@ export default function OrderAdminCard(props) {
               Address: {props.order.shippingInfo.address}{' '}
               {props.order.shippingInfo.city} {props.order.shippingInfo.pinCode}{' '}
               {props.order.shippingInfo.state} <br />
-              Phone No. {props.order.phoneNo}
+              Phone No. {props.order.shippingInfo.phoneNo}
             </div>
           </div>
         </div>

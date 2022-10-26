@@ -38,7 +38,7 @@ export default function ProductCard(props) {
   }, []);
 
   return (
-    <div className="col-12 col-md-6 col-lg-4">
+    <div className="col-12 col-md-6 col-lg-4 mb-2">
       <div className="card">
         <img
           src={imgsource? imgsource : `${props.product.images}`}
@@ -58,7 +58,6 @@ export default function ProductCard(props) {
           <h6>
             <i>{props.product.category}</i>
           </h6>
-          <p className="card-text">{props.product.description}</p>
           <div className="d-flex justify-content-between">
             <DropdownButton
               id="dropdown-basic-button"
@@ -129,7 +128,7 @@ export default function ProductCard(props) {
           <center>
               <button className="btn btn-link m-2" onClick={() => {
                 navigate("/productInfo", {state: props.product})
-              }}>View this product</button>
+              }}>View this product for more details</button>
             
           </center>
         </ul>
