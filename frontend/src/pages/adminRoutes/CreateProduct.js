@@ -1,6 +1,8 @@
 import { TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function CreateProduct(props) {
   const [product, setProduct] = useState({
@@ -12,6 +14,8 @@ export default function CreateProduct(props) {
   });
 
   const [productId, setProductId] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [productCategory, setProductCategory] = useState("");
 
   const [imageButton, setImageButton] = useState(false);
 
@@ -24,8 +28,24 @@ export default function CreateProduct(props) {
     console.log(product);
   };
 
-  const createProduct = async () => {
+  const getCategories = async () => {
+    try {
+      const response = await fetch(`${host}/api/v1/categories`, {
+        method: 'GET',
+      });
 
+      const res = await response.json();
+      if (response.status === 200) {
+        await setCategories(res);
+        console.log(categories);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createProduct = async () => {
     if (
       !product.name ||
       !product.price ||
@@ -69,6 +89,10 @@ export default function CreateProduct(props) {
     }
   };
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <>
       <div
@@ -90,75 +114,85 @@ export default function CreateProduct(props) {
               : '#1 Enter the product Information correctly then scroll down to the next form'}
           </h4>
         </div>
-        {imageButton ? <Outlet/> : <div className="container m-3">
-          <h4>Product info:</h4>
-          <TextField
-            fullWidth
-            sx={{ m: 1 }}
-            required
-            name="name"
-            id="outlined-required"
-            label="Product Name"
-            defaultValue=""
-            onChange={handleChange}
-            value={product.name}
-          />
-          <TextField
-            sx={{ width: '45%', m: 1 }}
-            required
-            name="price"
-            id="outlined-required"
-            label="Price"
-            defaultValue=""
-            onChange={handleChange}
-            value={product.price}
-          />
-
-          <TextField
-            sx={{ width: '45%', m: 1 }}
-            required
-            name="stock"
-            margin="normal"
-            id="outlined-required"
-            label="Stock"
-            defaultValue=""
-            onChange={handleChange}
-            value={product.stock}
-          />
-          <TextField
-            sx={{ width: '45%', m: 1 }}
-            required
-            margin="normal"
-            name="category"
-            id="outlined-required"
-            label="Product category"
-            defaultValue=""
-            onChange={handleChange}
-            value={product.category}
-          />
-          <TextField
-            sx={{ m: 1, width: '45%' }}
-            id="outlined-multiline-static"
-            label="Description"
-            name="description"
-            multiline
-            rows={4}
-            defaultValue=""
-            onChange={handleChange}
-            value={product.description}
-          />
-        </div>}
-        
         {imageButton ? (
-          <center><h5>Upload image here</h5></center>
+          <Outlet />
+        ) : (
+          <div className="container m-3">
+            <h4>Product info:</h4>
+            <TextField
+              fullWidth
+              sx={{ m: 1 }}
+              required
+              name="name"
+              id="outlined-required"
+              label="Product Name"
+              defaultValue=""
+              onChange={handleChange}
+              value={product.name}
+            />
+            <TextField
+              sx={{ width: '45%', m: 1 }}
+              required
+              name="price"
+              id="outlined-required"
+              label="Price"
+              defaultValue=""
+              onChange={handleChange}
+              value={product.price}
+            />
+            <TextField
+              sx={{ width: '45%', m: 1 }}
+              required
+              name="stock"
+              margin="normal"
+              id="outlined-required"
+              label="Stock"
+              defaultValue=""
+              onChange={handleChange}
+              value={product.stock}
+            />
+            <br />
+            Select Category:{' '}
+            <select
+            name='category'
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Category"
+            >
+              <option>Select</option>
+              {categories &&
+                categories.map((cate, index) => (
+                  <option key={index} value={cate._id}>
+                    {cate.name}
+                  </option>
+                ))}
+            </select>
+            <TextField
+              sx={{ m: 1, width: '45%' }}
+              id="outlined-multiline-static"
+              label="Description"
+              name="description"
+              multiline
+              rows={4}
+              defaultValue=""
+              onChange={handleChange}
+              value={product.description}
+            />
+          </div>
+        )}
+
+        {imageButton ? (
+          <center>
+            <h5>Upload image here</h5>
+          </center>
         ) : (
           <div className="container">
-          <center>
-            <button className="btn btn-primary" onClick={createProduct}>
-              Create this product with above information
-            </button>
-          </center>
-        </div>
+            <center>
+              <button className="btn btn-primary" onClick={createProduct}>
+                Create this product with above information
+              </button>
+            </center>
+          </div>
         )}
         {/* <Outlet /> */}
       </div>
