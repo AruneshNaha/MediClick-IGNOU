@@ -15,7 +15,7 @@ export default function CreateProduct(props) {
 
   const [productId, setProductId] = useState('');
   const [categories, setCategories] = useState([]);
-  const [productCategory, setProductCategory] = useState("");
+  const [productCategory, setProductCategory] = useState('');
 
   const [imageButton, setImageButton] = useState(false);
 
@@ -154,7 +154,7 @@ export default function CreateProduct(props) {
             <br />
             Select Category:{' '}
             <select
-            name='category'
+              name="category"
               onChange={handleChange}
               className="form-control"
               placeholder="Category"

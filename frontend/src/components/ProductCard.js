@@ -30,8 +30,8 @@ export default function ProductCard(props) {
     });
   };
 
-  const navigate = useNavigate()
-  const imgsource = require(`../backend/uploads/${props.product._id}.jpg`)
+  const navigate = useNavigate();
+  const imgsource = require(`../backend/uploads/${props.product._id}.jpg`);
 
   useEffect(() => {
     checkIfProductAdded(cart);
@@ -41,7 +41,7 @@ export default function ProductCard(props) {
     <div className="col-12 col-md-6 col-lg-4 mb-2">
       <div className="card">
         <img
-          src={imgsource? imgsource : `${props.product.images}`}
+          src={imgsource ? imgsource : `${props.product.images}`}
           alt="Product imag not found!"
           className="card-img-top"
         />
@@ -56,7 +56,11 @@ export default function ProductCard(props) {
             </span>
           </h5>
           <h6>
-            <i>{props.product.category.name}</i>
+            <i>
+              {props.product.category === null
+                ? 'No category classified'
+                : props.product.category.name}
+            </i>
           </h6>
           <div className="d-flex justify-content-between">
             <DropdownButton
@@ -78,7 +82,10 @@ export default function ProductCard(props) {
 
                   props.createCartArray(cart);
                   setProductAdded(1);
-                  props.showAlert(`${e} ${props.product.name} added to cart`, 'success');
+                  props.showAlert(
+                    `${e} ${props.product.name} added to cart`,
+                    'success'
+                  );
                 } else {
                   cart.forEach((cartItem) => {
                     if (cartItem.productId === props.product._id) {
@@ -111,7 +118,10 @@ export default function ProductCard(props) {
                 onClick={() => {
                   removeFromCart(props.product._id);
                   setProductAdded(0);
-                  props.showAlert(`${props.product.name} removed from cart`, 'danger');
+                  props.showAlert(
+                    `${props.product.name} removed from cart`,
+                    'danger'
+                  );
                   props.createCartArray(cart);
                 }}
               >
@@ -126,10 +136,14 @@ export default function ProductCard(props) {
 
         <ul className="list-group list-group-flush">
           <center>
-              <button className="btn btn-link m-2" onClick={() => {
-                navigate("/productInfo", {state: props.product})
-              }}>View this product for more details</button>
-            
+            <button
+              className="btn btn-link m-2"
+              onClick={() => {
+                navigate('/productInfo', { state: props.product });
+              }}
+            >
+              View this product for more details
+            </button>
           </center>
         </ul>
       </div>

@@ -286,7 +286,7 @@ export default function ManageProducts(props) {
             className="btn btn-primary"
             // disabled={note.title.length < 5 || note.description.length < 5}
           >
-            Update Note
+            Update Product
           </button>
           <button onClick={closeModal} className="btn btn-danger">
             Close

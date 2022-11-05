@@ -24,6 +24,7 @@ import ManageUsers from './adminRoutes/ManageUsers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChangePassword from './ChangePassword';
+import ManageCategories from './adminRoutes/ManageCategories';
 
 export default function Home() {
 
@@ -137,6 +138,11 @@ export default function Home() {
             exact
             path="/manageProducts"
             element={<ManageProducts showAlert={showAlert}></ManageProducts>}
+          ></Route>
+          <Route
+            exact
+            path="/mangeCategories"
+            element={<ManageCategories showAlert={showAlert}></ManageCategories>}
           ></Route>
           <Route
             exact

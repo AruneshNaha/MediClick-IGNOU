@@ -64,7 +64,7 @@ export default function ProductPage(props) {
           </div>
           <br />
           <h6>Category</h6>
-          <p>{location.state.category}</p>
+          <p>{location.state.category === null ? "No category classified" : location.state.category.name}</p>
           <h6>Description</h6>
           <p>{location.state.description}</p>
           <h6>Stock: {location.state.stock}</h6>

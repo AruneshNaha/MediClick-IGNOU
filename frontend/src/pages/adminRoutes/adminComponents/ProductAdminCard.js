@@ -26,7 +26,7 @@ export default function ProductAdminCard(props) {
             </span>
           </h5>
           <h6>
-            <i>{props.product.category.name}</i>
+            <i>{props.product.category === null ? "No category classified" : props.product.category.name}</i>
           </h6>
           <p className="card-text">{props.product.description}</p>
           <div className="d-flex justify-content-between">
