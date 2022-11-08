@@ -141,7 +141,7 @@ export default function Home() {
           ></Route>
           <Route
             exact
-            path="/mangeCategories"
+            path="/manageCategories"
             element={<ManageCategories showAlert={showAlert}></ManageCategories>}
           ></Route>
           <Route

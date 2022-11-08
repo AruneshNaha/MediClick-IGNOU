@@ -18,6 +18,7 @@ export default function ManageProducts(props) {
   const [products, setproducts] = useState([]);
   const [error, seterror] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [productId, setProductId] = useState('');
   const [editedProd, setEditedProd] = useState({
     name: '',
@@ -34,6 +35,23 @@ export default function ManageProducts(props) {
   const handleChange = (e) => {
     setEditedProd({ ...editedProd, [e.target.name]: e.target.value });
     console.log(editedProd);
+  };
+
+  const getCategories = async () => {
+    try {
+      const response = await fetch(`${localhost}/api/v1/categories`, {
+        method: 'GET',
+      });
+
+      const res = await response.json();
+      if (response.status === 200) {
+        await setCategories(res);
+        console.log(categories);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const loadallproducts = () => {
@@ -98,7 +116,7 @@ export default function ManageProducts(props) {
   };
 
   const sendProductToDatabase = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     if (token && role === 'admin') {
@@ -114,7 +132,7 @@ export default function ManageProducts(props) {
       if (response.status === 200) {
         loadallproducts();
         props.showAlert('Product updated successfully!', 'success');
-        closeModal()
+        closeModal();
       } else {
         props.showAlert('Failed to update product', 'danger');
       }
@@ -123,6 +141,7 @@ export default function ManageProducts(props) {
 
   useEffect(() => {
     loadallproducts();
+    getCategories();
   }, []);
 
   return (
@@ -179,16 +198,20 @@ export default function ManageProducts(props) {
               <label htmlFor="category" className="form-label">
                 Category
               </label>
-              <input
+              <select
                 name="category"
-                type="text"
-                value={editedProd.category}
                 onChange={handleChange}
                 className="form-control"
-                id="category"
-                minLength={5}
-                required
-              />
+                placeholder="Category"
+              >
+                <option>Select</option>
+                {categories &&
+                  categories.map((cate, index) => (
+                    <option key={index} value={cate._id}>
+                      {cate.name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <div className="mb-3">
               <label htmlFor="price" className="form-label">

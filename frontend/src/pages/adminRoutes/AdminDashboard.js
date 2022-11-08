@@ -53,6 +53,16 @@ export default function AdminDashboard() {
             <button
               className="btn btn-link"
               onClick={() => {
+                navigate('/manageCategories');
+              }}
+            >
+              <CategoryIcon></CategoryIcon> Category Management
+            </button>
+          </li>
+          <li>
+            <button
+              className="btn btn-link"
+              onClick={() => {
                 navigate('/manageOrdersAdmin');
               }}
             >

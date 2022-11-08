@@ -17,7 +17,7 @@ export default function ManageCategories(props) {
 
   const handleChange = (e) => {
     setCategoryName(e.target.value);
-    setEditedCategory({ name: categoryName });
+    setEditedCategory({ name: e.target.value });
   };
 
   const getCategories = async () => {
@@ -61,6 +61,7 @@ export default function ManageCategories(props) {
           console.log(`category ID from createProduct: ${res.category._id}`);
           props.showAlert('Category created successfully!', 'success');
           getCategories();
+          setCategoryName("")
         } else {
           props.showAlert('Failed to create category', 'danger');
         }
@@ -135,6 +136,7 @@ export default function ManageCategories(props) {
         getCategories();
         props.showAlert('Category updated successfully!', 'success');
         closeModal();
+        setCategoryName("")
       } else {
         props.showAlert('Failed to update category', 'danger');
       }
