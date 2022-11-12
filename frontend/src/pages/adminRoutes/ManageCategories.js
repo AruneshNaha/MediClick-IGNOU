@@ -1,6 +1,7 @@
 import { TextField } from '@mui/material';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
+import CategoryAdminCard from './adminComponents/CategoryAdminCard';
 
 export default function ManageCategories(props) {
   const [categoryName, setCategoryName] = useState('');
@@ -61,7 +62,7 @@ export default function ManageCategories(props) {
           console.log(`category ID from createProduct: ${res.category._id}`);
           props.showAlert('Category created successfully!', 'success');
           getCategories();
-          setCategoryName("")
+          setCategoryName('');
         } else {
           props.showAlert('Failed to create category', 'danger');
         }
@@ -136,7 +137,7 @@ export default function ManageCategories(props) {
         getCategories();
         props.showAlert('Category updated successfully!', 'success');
         closeModal();
-        setCategoryName("")
+        setCategoryName('');
       } else {
         props.showAlert('Failed to update category', 'danger');
       }
@@ -229,33 +230,13 @@ export default function ManageCategories(props) {
 
           {categories.map((category) => {
             return (
-              <div key={category._id} className="row text-center mb-2 ">
-                <div className="col-4">
-                  <h5>{category.name}</h5>
-                </div>
-                <div className="col-4">
-                  <button
-                    className="btn btn-success m-2"
-                    onClick={() => {
-                      getCategoryById(category._id);
-                      setCategoryID(category._id);
-                      setShowModal(true);
-                    }}
-                  >
-                    Update
-                  </button>
-                </div>
-                <div className="col-4">
-                  <button
-                    onClick={() => {
-                      deleteCategory(category._id);
-                    }}
-                    className="btn btn-danger m-2"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              <CategoryAdminCard
+                category={category}
+                getCategoryById={getCategoryById}
+                setCategoryID={setCategoryID}
+                setShowModal={setShowModal}
+                deleteCategory={deleteCategory}
+              ></CategoryAdminCard>
             );
           })}
         </center>
