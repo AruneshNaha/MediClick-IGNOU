@@ -10,6 +10,11 @@ export default function ManageCategories(props) {
   const [showModal, setShowModal] = useState(false);
   const [editedCategory, setEditedCategory] = useState({ name: categoryName });
 
+  const [productCount, setProductCount] = useState(0);
+
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState([]);
+
   const host = 'http://localhost:4000';
 
   const closeModal = () => {
@@ -21,6 +26,27 @@ export default function ManageCategories(props) {
     setEditedCategory({ name: e.target.value });
   };
 
+  const getProducts = async () => {
+    return await fetch(`http://localhost:4000/api/v1/products`, {
+      method: 'GET',
+    })
+      .then(async (response) => {
+        return response.json();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const loadallproducts = async() => {
+    await getProducts().then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProducts(data.products);
+        console.log(data);
+      }
+    });
+  };
+
   const getCategories = async () => {
     try {
       const response = await fetch(`${host}/api/v1/categories`, {
@@ -29,9 +55,7 @@ export default function ManageCategories(props) {
 
       const res = await response.json();
       if (response.status === 200) {
-        await setCategories(res);
-        console.log(categories);
-        console.log(res);
+        setCategories(res);
       }
     } catch (error) {
       console.log(error);
@@ -146,6 +170,7 @@ export default function ManageCategories(props) {
 
   useEffect(() => {
     getCategories();
+    loadallproducts();
   }, []);
 
   return (
@@ -231,7 +256,9 @@ export default function ManageCategories(props) {
           {categories.map((category) => {
             return (
               <CategoryAdminCard
-                category={category}
+              key={category._id}
+              products={products}
+              category={category}
                 getCategoryById={getCategoryById}
                 setCategoryID={setCategoryID}
                 setShowModal={setShowModal}
