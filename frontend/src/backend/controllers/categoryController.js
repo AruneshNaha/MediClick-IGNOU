@@ -1,5 +1,7 @@
 const Category = require('../models/categoryModel')
+const Product = require('../models/productModel');
 const { json } = require("body-parser");
+const ErrorHandler = require('../utils/errorHandler');
 
 exports.getCategoryById = (req, res, next, id) => {
     Category.findById(id).exec((err,cate)=>{
@@ -41,7 +43,20 @@ exports.getAllCategory = (req,res) => {
         }
         res.json(items)
     })
-} 
+}
+
+exports.getProductsByCategoryID = async(req,res, next) =>{
+    const products = await Product.find().where({'category': req.params.categoryId}).populate('category')
+
+    if(products.length === 0){
+        return next(new ErrorHandler('No products found in this category', 404))
+    }else{
+        res.status(200).json({
+            productCount: products.length,
+            products
+        })
+    }
+}
 
 exports.updateCategory = (req,res) => {
     const category = req.category;
