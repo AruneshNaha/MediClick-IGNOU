@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import CardsByCategory from '../components/CardsByCategory';
 import Crsl from '../components/Crsl';
 import AuthContext from './context/AuthContext';
 import AuthState from './context/AuthState';
@@ -30,6 +31,7 @@ export default function Dashboard() {
         </center>
       </div>
       <Crsl></Crsl>
+      <CardsByCategory></CardsByCategory>
     </AuthState>
   );
 }

@@ -19,7 +19,7 @@ export default function Crsl() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          style={{height: 400, opacity: .4}}
+          style={{height: 300, opacity: .4}}
           src={require('../carousel-images/p2.jpg')}
           alt="Second slide"
         />

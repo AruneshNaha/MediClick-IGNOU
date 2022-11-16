@@ -82,7 +82,7 @@ export default function Navbar(props) {
                   aria-current="page"
                   to="/products"
                 >
-                  View Products
+                  View all Products
                 </Link>
               </li>
 
