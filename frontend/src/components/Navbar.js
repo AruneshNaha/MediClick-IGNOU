@@ -188,7 +188,6 @@ export default function Navbar(props) {
             </ul>
             <div className="d-flex">
               <Autocomplete
-                autoComplete="off"
                 disablePortal
                 id="combo-box-demo"
                 options={productArray}
